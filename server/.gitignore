@@ -1,0 +1,27 @@
+# Composer vendor
+/vendor/
+
+# Environment variables
+.env
+
+# XAMPP / local config files
+/config/database.php
+/config/*.local.php
+
+# Logs
+/logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor files
+.vscode/
+.idea/
+
+# PHPStorm caches
+*.iml
+
+# Optional: build or temp folders
+/tmp/
