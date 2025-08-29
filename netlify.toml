@@ -1,5 +1,7 @@
 [build]
-  command = "echo 'Chưa chọn base'"
+  base = "client"
+  command = "npm run build"
+  publish = "build"
 
 # Client size
 [context.client]
