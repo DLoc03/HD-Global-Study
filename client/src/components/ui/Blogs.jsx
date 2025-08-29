@@ -5,11 +5,15 @@ import CommonSlider from "../common/CommonSlider";
 import BlogCard from "../common/BlogCard";
 import useResponsiveItems from "@/contexts/ResponsiveItems";
 import CommonButton from "../common/CommonButton";
+import { useCommonNavigate } from "@/contexts/HandleNavigate";
+import { PATHS } from "@/constants";
 
 function Blogs() {
   const itemsPerSlide = useResponsiveItems({ base: 1, md: 2, lg: 2, xl: 4 });
 
   const [blogList, setBlogList] = useState([]);
+
+  const handleNavigate = useCommonNavigate();
 
   useEffect(() => {
     if (blogs) {
@@ -26,7 +30,10 @@ function Blogs() {
         ))}
         itemsPerSlide={itemsPerSlide}
       />
-      <CommonButton className={"border-primary w-full rounded-full border-1"}>
+      <CommonButton
+        className={"border-primary w-full rounded-full border-1"}
+        onClick={() => handleNavigate(PATHS.BLOG)}
+      >
         Xem thêm
       </CommonButton>
     </div>
