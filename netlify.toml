@@ -1,0 +1,16 @@
+[build]
+  command = "echo 'Chưa chọn base'"
+
+# Client size
+[context.client]
+  [context.client.build]
+    base = ""
+    command = "npm run build"
+    publish = "dist"
+
+# Admin site
+[context.admin]
+  [context.admin.build]
+    base = "admin"
+    command = "npm run build"
+    publish = "dist"
