@@ -16,7 +16,7 @@ function Overview() {
       <h2 className="text-secondary text-center text-2xl font-medium">
         CHẮP CÁNH ƯỚC MƠ DU HỌC & ĐỊNH CƯ TOÀN CẦU
       </h2>
-      <h3 className="max-w-2xl text-center">
+      <h3 className="max-w-2xl text-center font-light">
         Là đơn vị chuyên tư vấn du học và định cư uy tín, đồng hành cùng hàng
         ngàn học sinh, sinh viên và gia đình Việt Nam trên hành trình vươn ra
         thế giới, chinh phục tri thức tại Mỹ

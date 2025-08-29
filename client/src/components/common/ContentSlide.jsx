@@ -38,7 +38,7 @@ function CommonSlider({ items = [], itemsPerSlide = 3, className = "" }) {
       </div>
 
       {totalSlides > 1 && (
-        <div className="mt-4 flex w-full items-center justify-center gap-2 md:justify-end">
+        <div className="mt-4 flex w-full items-center justify-center gap-2 lg:justify-end">
           <CommonButton
             onClick={prevSlide}
             disabled

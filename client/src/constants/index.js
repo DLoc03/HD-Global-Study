@@ -6,6 +6,10 @@ import banner_5 from "@assets/banner/banner_5.png";
 
 import nguyenlongdien from "@assets/photos/nguyen_long_dien.jpg";
 import elizabeth from "@assets/photos/elizabeth.jpg";
+import dang_khoa from "@assets/photos/dang_khoa.jpg";
+import nam_truong from "@assets/photos/nam_truong.jpg";
+import quang_linh from "@assets/photos/quang_linh.jpeg";
+import thuy_linh from "@assets/photos/thuy_linh.jpeg";
 
 const PATHS = {
   HOME: "/",
@@ -62,6 +66,25 @@ const BANNER_MAP = [
 const IMAGE_MAP = {
   elizabeth,
   nguyenlongdien,
+  quang_linh,
+  thuy_linh,
+  dang_khoa,
+  nam_truong,
 };
 
-export { PATHS, CONTACT, BANNER_MAP, IMAGE_MAP };
+const USER_MAP = [
+  {
+    name: "dang_khoa",
+    src: dang_khoa,
+    title: "Hành trình du học Mỹ của ĐĂNG KHOA",
+    subtitle: "Golden West College in Huntington Beach, California.",
+  },
+  {
+    name: "nam_truong",
+    src: nam_truong,
+    title: "Hành trình du học Mỹ của NAM TRƯƠNG",
+    subtitle: "Liberty Christian School  in Huntington Beach, California.",
+  },
+];
+
+export { PATHS, CONTACT, BANNER_MAP, IMAGE_MAP, USER_MAP };
