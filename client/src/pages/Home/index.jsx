@@ -1,7 +1,7 @@
 import React from "react";
 
 import Overview from "@/components/ui/Overview";
-import AutoSlider from "@/components/common/AutoSlide";
+import AutoSlider from "@/components/common/BannerSlider";
 import { BANNER_MAP } from "@/constants";
 import Introduction from "@/components/ui/Introduction";
 import GuestReviews from "@/components/ui/GuestReviews";

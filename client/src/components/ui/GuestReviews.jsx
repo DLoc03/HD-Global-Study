@@ -3,7 +3,7 @@ import React from "react";
 import { reviews } from "@/datas/reviews.json";
 import useResponsiveItems from "@/contexts/ResponsiveItems";
 import ReviewCard from "../common/ReviewCard";
-import CommonSlider from "../common/ContentSlide";
+import CommonSlider from "../common/CommonSlider";
 import { IMAGE_MAP } from "@/constants";
 
 function GuestReviews() {

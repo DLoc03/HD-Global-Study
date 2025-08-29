@@ -2,7 +2,7 @@ import React from "react";
 
 import { services } from "@/datas/services.json";
 import useResponsiveItems from "@/contexts/ResponsiveItems";
-import CommonSlider from "../common/ContentSlide";
+import CommonSlider from "../common/CommonSlider";
 import ServiceCard from "../common/ServiceCard";
 
 function Services() {
@@ -13,9 +13,10 @@ function Services() {
         Dịch vụ của chúng tôi
       </h1>
       <h1 className="text-md max-w-2xl text-center">
-        Với đội ngũ chuyên gia giàu kiến thức và kinh nghiệm, HD Global Study
-        không chỉ giúp bạn hiện thực hóa giấc mơ vào các trường mong ước, mà còn
-        tự tin hòa nhập môi trường đa văn hóa và gặt hái thành công
+        Với đội ngũ chuyên gia giàu kiến thức và kinh nghiệm,{" "}
+        <span className="text-primary font-bold">HD Global Study</span> không
+        chỉ giúp bạn hiện thực hóa giấc mơ vào các trường mong ước, mà còn tự
+        tin hòa nhập môi trường đa văn hóa và gặt hái thành công
       </h1>
       <CommonSlider
         items={services.map((service) => (

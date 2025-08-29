@@ -4,9 +4,9 @@ import { ceos, users } from "@/datas/users.json";
 
 import { IMAGE_MAP, USER_MAP } from "@/constants";
 import IntroductionCard from "../common/IntroductionCard";
-import CommonSlider from "../common/ContentSlide";
+import CommonSlider from "../common/CommonSlider";
 import useResponsiveItems from "@/contexts/ResponsiveItems";
-import AutoSlider from "../common/AutoSlide";
+import AutoSlider from "../common/BannerSlider";
 
 function Introduction() {
   const itemsPerSlide = useResponsiveItems({ base: 1, xl: 2 });

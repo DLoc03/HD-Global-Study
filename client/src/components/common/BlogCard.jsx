@@ -3,7 +3,7 @@ import React from "react";
 
 function BlogCard({ blog }) {
   return (
-    <div className="flex h-full cursor-pointer flex-col gap-1 rounded-xl shadow-md">
+    <div className="shadow-main flex h-full cursor-pointer flex-col gap-1 rounded-xl">
       <img
         src={blog.image}
         alt={blog.name}

@@ -9,6 +9,7 @@
   --color-secondary: #354336;
   --color-third: #efd78f;
   --color-light: #8d9e91;
+  --shadow-main: rgba(0, 0, 0, 0.1) 0px 5px 25px 0px;
 }
 
 /* auto hide */

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { blogs } from "@/datas/blogs.json";
-import CommonSlider from "../common/ContentSlide";
+import CommonSlider from "../common/CommonSlider";
 import BlogCard from "../common/BlogCard";
 import useResponsiveItems from "@/contexts/ResponsiveItems";
 import CommonButton from "../common/CommonButton";

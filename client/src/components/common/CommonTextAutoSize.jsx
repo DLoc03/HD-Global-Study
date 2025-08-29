@@ -5,7 +5,7 @@ export default function CommonTextAutoSize({
   onChange,
   placeholder = "",
   className = "",
-  minRows = 2,
+  minRows = 4,
   maxRows = 6,
 }) {
   const textareaRef = useRef(null);

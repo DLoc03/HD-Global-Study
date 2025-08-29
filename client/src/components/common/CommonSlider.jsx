@@ -16,13 +16,16 @@ function CommonSlider({ items = [], itemsPerSlide = 3, className = "" }) {
   };
 
   return (
-    <div className={`relative w-full overflow-hidden ${className}`}>
+    <div className={`relative w-full overflow-hidden px-4 ${className}`}>
       <div
-        className="flex py-2 transition-transform duration-500"
+        className="-mx-2 flex py-2 transition-transform duration-500"
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {Array.from({ length: totalSlides }).map((_, slideIndex) => (
-          <div key={slideIndex} className="flex w-full flex-shrink-0 gap-4">
+          <div
+            key={slideIndex}
+            className="flex w-full flex-shrink-0 gap-4 px-2"
+          >
             {items
               .slice(
                 slideIndex * itemsPerSlide,
@@ -36,7 +39,6 @@ function CommonSlider({ items = [], itemsPerSlide = 3, className = "" }) {
           </div>
         ))}
       </div>
-
       {totalSlides > 1 && (
         <div className="mt-4 flex w-full items-center justify-center gap-2 lg:justify-end">
           <CommonButton

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import { MdOutlineMail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
-import { CONTACT } from "@/constants";
+import { SlPaperPlane } from "react-icons/sl";
 
 import { services } from "@/datas/services.json";
+
+import { CONTACT } from "@/constants";
 
 import CommonInput from "./CommonInput";
 import CommonSelectInput from "./CommonSelectInput";
@@ -139,12 +141,10 @@ function ContactForm() {
             onChange={(val) => handleChange("message", val)}
           />
           <CommonButton
-            className={
-              "bg-primary w-full max-w-full place-self-end rounded-full text-white"
-            }
+            className={"bg-primary w-full rounded-full text-white"}
             onClick={handleSubmit}
           >
-            Gửi
+            Gửi <SlPaperPlane fontSize={"20px"} color="white" />
           </CommonButton>
         </div>
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 function ReviewCard({ user, avatar }) {
   return (
-    <div className="flex max-h-[300px] min-h-[260px] w-full max-w-[360px] flex-col gap-2 rounded-xl p-4 shadow-md">
+    <div className="shadow-main flex max-h-[300px] min-h-[260px] w-full max-w-[360px] flex-col gap-2 rounded-xl p-4">
       <div className="flex gap-4">
         <img
           src={avatar}
