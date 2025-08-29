@@ -27,6 +27,10 @@ const menus = [
     name: "Tại sao chọn HD Global Study",
   },
   {
+    path: PATHS.BLOG,
+    name: "Blogs",
+  },
+  {
     path: PATHS.GALLERY,
     name: "Thư viện",
   },

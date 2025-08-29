@@ -18,7 +18,7 @@ function CommonSlider({ items = [], itemsPerSlide = 3, className = "" }) {
   return (
     <div className={`relative w-full overflow-hidden ${className}`}>
       <div
-        className="flex transition-transform duration-500"
+        className="flex py-2 transition-transform duration-500"
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {Array.from({ length: totalSlides }).map((_, slideIndex) => (

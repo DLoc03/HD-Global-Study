@@ -1,0 +1,24 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "title": "Tư vấn chọn trường & ngành học phù hợp với năng lực, tài chính và mục tiêu cá nhân."
+    },
+    {
+      "id": 2,
+      "title": "Hỗ trợ hồ sơ học tập, chứng minh tài chính và hướng dẫn xin visa dựa trên thế mạnh riêng từng hồ sơ."
+    },
+    {
+      "id": 3,
+      "title": "Cập nhật thường xuyên chính sách visa du học Mỹ mới nhất."
+    },
+    {
+      "id": 4,
+      "title": "Đào tạo kỹ năng, kiến thức phỏng vấn & tiếng Anh để phát triển thế mạnh và tự tin chinh phục."
+    },
+    {
+      "id": 5,
+      "title": "Cập nhật thường xuyên chính sách visa du học Mỹ mới nhất."
+    }
+  ]
+}

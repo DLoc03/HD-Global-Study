@@ -47,7 +47,9 @@ function Footer() {
     <div className="mt-8 w-full border-t-1 border-gray-200 bg-white px-0 md:px-4">
       <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between py-12 lg:flex-row lg:items-start">
         <div className="flex flex-col items-center space-y-2 lg:items-start">
-          <h1 className="mb-4 text-xl font-semibold">Công ty HDNguyen.LLC</h1>
+          <h1 className="text-primary mb-4 text-2xl font-semibold">
+            HD GLobal Study
+          </h1>
           <ul className="flex flex-col items-center space-y-2 lg:items-start">
             <li>
               <a
@@ -124,7 +126,7 @@ function Footer() {
         </div>
       </div>
       <div className="w-full border-t-1 border-gray-200" />
-      <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-center space-y-4 py-16 md:justify-between lg:flex-row">
+      <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-center space-y-4 py-8 md:justify-between lg:flex-row">
         <CommonLogo size="120px" />
         <div className="flex flex-col items-center justify-center gap-1 md:flex-row">
           <h2 className="flex-co flex font-semibold">

@@ -5,6 +5,9 @@ import AutoSlider from "@/components/common/AutoSlide";
 import { BANNER_MAP } from "@/constants";
 import Introduction from "@/components/ui/Introduction";
 import GuestReviews from "@/components/ui/GuestReviews";
+import Services from "@/components/ui/Services";
+import Blogs from "@/components/ui/Blogs";
+import ContactForm from "@/components/common/ContactForm";
 
 function Home() {
   return (
@@ -12,7 +15,10 @@ function Home() {
       <Overview />
       <AutoSlider images={BANNER_MAP} isShowTitle={false} />
       <Introduction />
+      <Services />
       <GuestReviews />
+      <Blogs />
+      <ContactForm />
     </div>
   );
 }

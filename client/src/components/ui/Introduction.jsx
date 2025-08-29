@@ -13,7 +13,7 @@ function Introduction() {
   return (
     <div className="grid gap-8 sm:grid-cols-5 lg:grid-cols-6 lg:gap-8 xl:grid-cols-5 xl:gap-32">
       <div className="col-span-5 grid grid-cols-2 gap-4 lg:col-span-3">
-        <div className="col-span-2 text-center text-4xl lg:text-left">
+        <div className="text-primary col-span-2 text-center text-4xl font-bold lg:text-left">
           Câu chuyện của chúng tôi
         </div>
         <div className="text-md col-span-2 text-justify font-light">
