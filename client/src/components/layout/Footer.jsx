@@ -44,7 +44,7 @@ const menus = [
 
 function Footer() {
   return (
-    <div className="w-full border-t-1 border-gray-200 px-0 md:px-4">
+    <div className="mt-8 w-full border-t-1 border-gray-200 bg-white px-0 md:px-4">
       <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between py-12 lg:flex-row lg:items-start">
         <div className="flex flex-col items-center space-y-2 lg:items-start">
           <h1 className="mb-4 text-xl font-semibold">Công ty HDNguyen.LLC</h1>

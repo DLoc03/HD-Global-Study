@@ -67,7 +67,7 @@ function Header() {
   return (
     <>
       <div
-        className={`fixed top-0 z-1 w-full bg-white py-4 transition-all duration-300 ${show ? "translate-y-0" : "-translate-y-full"} ${scrolled ? "shadow-lg" : ""}`}
+        className={`fixed top-0 z-20 w-full py-4 transition-all duration-300 ${show ? "translate-y-0 bg-white" : "-translate-y-full"} ${scrolled ? "shadow-lg" : ""}`}
       >
         <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-4 xl:px-0">
           <CommonLogo size="60px" />

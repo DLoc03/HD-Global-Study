@@ -55,13 +55,15 @@ export default function AutoSlider({
             />
 
             {isShowTitle && (item.title || item.subtitle || item.link) && (
-              <div className="absolute inset-0 bottom-12 flex flex-col items-center justify-end text-center drop-shadow-lg">
-                <div className="rounded-lg bg-gray-300/60 px-6 py-4 text-white">
+              <div className="absolute inset-0 bottom-6 flex flex-col items-center justify-end text-center drop-shadow-lg md:bottom-12">
+                <div className="max-w-md rounded-lg bg-gray-300/60 px-6 py-4 text-white">
                   {item.title && (
-                    <h2 className="text-2xl font-bold">{item.title}</h2>
+                    <h2 className="text-sm font-bold md:text-xl">
+                      {item.title}
+                    </h2>
                   )}
                   {item.subtitle && (
-                    <p className="mt-1 text-lg">{item.subtitle}</p>
+                    <p className="md:text-md mt-1 text-xs">{item.subtitle}</p>
                   )}
                 </div>
               </div>
