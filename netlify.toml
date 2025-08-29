@@ -1,14 +1,7 @@
-# Client site
-[context.client]
-  [context.client.build]
-    base = "client"
-    command = "npm run build"
-    publish = "dist"
-
 # Client size
 [context.client]
   [context.client.build]
-    base = ""
+    base = "client"
     command = "npm run build"
     publish = "dist"
 
