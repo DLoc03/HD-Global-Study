@@ -64,7 +64,7 @@ function ContactForm() {
       type: "success",
       message: "Gửi thành công!",
     });
-    console.log("Form now: ", formData);
+    // console.log("Form now: ", formData);
   };
   return (
     <>
@@ -75,7 +75,9 @@ function ContactForm() {
           onClose={() => setAlert(null)}
         />
       )}
-      <div className="bg-primary grid grid-cols-2 items-center gap-4 rounded-xl p-4 shadow-md md:p-8">
+      <div
+        className={`bg-primary grid w-full grid-cols-2 items-center gap-4 rounded-xl p-4 shadow-md md:p-8`}
+      >
         <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
           <h1 className="text-center text-2xl font-bold text-white md:text-left md:text-4xl">
             Kết nối với chúng tôi

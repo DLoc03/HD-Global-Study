@@ -26,12 +26,16 @@ function About() {
           <img
             src={IMAGE_MAP[ceos[0].key]}
             alt={ceos[0].name}
-            className="h-[200px] w-[200px] rounded-md object-cover"
+            className="h-[120px] w-[120px] rounded-md object-cover lg:h-[200px] lg:w-[200px]"
           />
         </div>
         <h1 className="text-primary text-lg font-bold">{ceos[0].title}</h1>
         <p className="text-md">{ceos[0].subtitle}</p>
-        <p className="mt-4 text-justify font-light">{ceos[0].content}</p>
+        {ceos[0].content.map((text, index) => (
+          <p key={index} className="mt-4 text-justify font-light">
+            {text}
+          </p>
+        ))}
       </div>
 
       <div className="w-full">
@@ -39,14 +43,18 @@ function About() {
           <img
             src={IMAGE_MAP[ceos[1].key]}
             alt={ceos[1].name}
-            className="h-[200px] w-[200px] rounded-md object-cover"
+            className="h-[120px] w-[120px] rounded-md object-cover lg:h-[200px] lg:w-[200px]"
           />
         </div>
         <h1 className="text-primary text-right text-lg font-bold">
           {ceos[1].title}
         </h1>
-        <p className="text-md text-right">{ceos[1].subtitle}</p>
-        <p className="mt-4 text-justify font-light">{ceos[1].content}</p>
+        <p className="text-md text-justify lg:text-right">{ceos[1].subtitle}</p>
+        {ceos[1].content.map((text, index) => (
+          <p key={index} className="mt-4 text-justify font-light">
+            {text}
+          </p>
+        ))}
       </div>
 
       <Services />

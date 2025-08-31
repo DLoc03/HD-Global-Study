@@ -38,7 +38,7 @@ function IntroductionCard({ info, image }) {
           </CommonButton>
         </div>
       </div>
-      <h2 className="line-clamp-3 text-sm text-white">{info.content}</h2>
+      <h2 className="line-clamp-3 text-sm text-white">{info.content[0]}</h2>
     </div>
   );
 }

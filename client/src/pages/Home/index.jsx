@@ -11,7 +11,7 @@ import ContactForm from "@/components/common/ContactForm";
 
 function Home() {
   return (
-    <div className="space-y-8">
+    <div className="mt-28 space-y-8">
       <Overview />
       <AutoSlider images={BANNER_MAP} isShowTitle={false} />
       <Introduction />

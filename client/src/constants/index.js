@@ -96,4 +96,31 @@ const USER_MAP = [
   },
 ];
 
-export { PATHS, CONTACT, BANNER_MAP, IMAGE_MAP, USER_MAP };
+const MENU_MAP = [
+  {
+    path: PATHS.HOME,
+    name: "Trang chủ",
+  },
+  {
+    path: PATHS.ABOUT,
+    name: "Giới thiệu",
+  },
+  {
+    path: PATHS.SERVICE,
+    name: "Dịch vụ tư vấn",
+  },
+  {
+    path: PATHS.ADVANTAGE,
+    name: "Tại sao chọn HD Global Study",
+  },
+  {
+    path: PATHS.BLOG,
+    name: "Blogs",
+  },
+  {
+    path: PATHS.GALLERY,
+    name: "Thư viện",
+  },
+];
+
+export { PATHS, CONTACT, BANNER_MAP, IMAGE_MAP, USER_MAP, MENU_MAP };

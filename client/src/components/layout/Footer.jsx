@@ -7,7 +7,7 @@ import { CONTACT, PATHS } from "@/constants";
 
 import { MdOutlineMail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
-import { CiFacebook } from "react-icons/ci";
+import { FaFacebook } from "react-icons/fa";
 
 const menus = [
   {
@@ -138,9 +138,9 @@ function Footer() {
         <Link
           to={CONTACT.FACEBOOK}
           target="blank"
-          className="flex items-center gap-1 font-medium"
+          className="flex items-center gap-2 font-medium"
         >
-          <CiFacebook fontSize={"28px"} /> HD Nguyen.LLC
+          <FaFacebook color="blue" fontSize={"28px"} /> HD Nguyen.LLC
         </Link>
       </div>
     </div>

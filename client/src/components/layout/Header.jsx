@@ -1,40 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import { PATHS } from "@/constants";
+import { MENU_MAP, PATHS } from "@/constants";
 
 import CommonNavLink from "../common/CommonNavLink";
 import CommonLogo from "../common/CommonLogo";
 
 import { AiOutlineMenu } from "react-icons/ai";
 import MenuDrawer from "../common/MenuDrawer";
-
-const menus = [
-  {
-    path: PATHS.HOME,
-    name: "Trang chủ",
-  },
-  {
-    path: PATHS.ABOUT,
-    name: "Giới thiệu",
-  },
-  {
-    path: PATHS.SERVICE,
-    name: "Dịch vụ tư vấn",
-  },
-  {
-    path: PATHS.ADVANTAGE,
-    name: "Tại sao chọn HD Global Study",
-  },
-  {
-    path: PATHS.BLOG,
-    name: "Blogs",
-  },
-  {
-    path: PATHS.GALLERY,
-    name: "Thư viện",
-  },
-];
 
 function Header() {
   const location = useLocation();
@@ -71,12 +44,12 @@ function Header() {
   return (
     <>
       <div
-        className={`fixed top-0 z-20 w-full py-4 transition-all duration-300 ${show ? "translate-y-0 bg-white" : "-translate-y-full"} ${scrolled ? "shadow-lg" : ""}`}
+        className={`fixed top-0 z-20 w-full py-4 transition-all duration-300 ${show ? "translate-y-0 border-1 border-gray-100 bg-white" : "-translate-y-full"} ${scrolled ? "shadow-lg" : ""}`}
       >
         <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-4 xl:px-0">
           <CommonLogo size="60px" />
           <ul className="hidden justify-end space-x-4 lg:flex">
-            {menus.map((menu, index) => (
+            {MENU_MAP.map((menu, index) => (
               <CommonNavLink
                 key={index}
                 menu={menu}
@@ -95,7 +68,7 @@ function Header() {
       </div>
       <MenuDrawer
         open={openDrawer}
-        menus={menus}
+        menus={MENU_MAP}
         onClose={() => {
           setOpenDrawer(false);
           setRotated(false);
