@@ -28,7 +28,7 @@ function RedirectPath({ path }) {
       {id && (
         <div className="flex items-center gap-4">
           <IoIosArrowForward />
-          <p className="font-bold">{blog}</p>
+          <p className="line-clamp-1 font-bold">{blog}</p>
         </div>
       )}
     </div>

@@ -18,7 +18,7 @@ function BlogContent() {
   return (
     <>
       {blog && (
-        <div className="flex w-full flex-col gap-4">
+        <div className="flex w-full flex-col flex-wrap gap-4">
           <p className="text-light text-md">
             Ngày đăng: {convertDateTime(blog.date)}
           </p>
