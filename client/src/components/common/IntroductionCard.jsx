@@ -9,21 +9,23 @@ import { PATHS } from "@/constants";
 function IntroductionCard({ info, image }) {
   const handleNavigate = useCommonNavigate();
   return (
-    <div className="bg-light flex h-[240px] w-full flex-col items-center gap-4 rounded-2xl p-4 md:items-start">
+    <div
+      className={`bg-light flex h-[240px] w-full flex-col gap-4 rounded-2xl p-4`}
+    >
       <div className="flex w-full justify-between">
-        <div className="h-[120px w-[120px] rounded-2xl border-4 border-white">
+        <div className="h-[74px] w-[74px] rounded-2xl border-4 border-white md:h-[120px] md:w-[120px]">
           <img
             src={image}
             alt={info.name}
-            style={{ width: "100%" }}
+            style={{ width: "100%", objectFit: "cover" }}
             className="rounded-2xl"
           />
         </div>
-        <div className="flex max-w-[240px] flex-col items-end gap-2">
+        <div className="flex max-w-[220px] flex-col items-end gap-2">
           <h1 className="text-right text-lg font-medium text-white">
             {info.title}
           </h1>
-          <p className="line-clamp-2 w-full max-w-[200px] text-right text-sm text-white">
+          <p className="line-clamp-2 w-full max-w-full text-right text-sm text-white">
             {info.subtitle}
           </p>
           <CommonButton

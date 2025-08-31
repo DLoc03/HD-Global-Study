@@ -18,7 +18,7 @@ const validateForm = (formData, requiredFields = []) => {
   const errors = {};
   requiredFields.forEach((field) => {
     if (!formData[field] || formData[field].toString().trim() === "") {
-      errors[field] = "Trường này là bắt buộc";
+      errors[field] = "Ô này là này là bắt buộc";
     }
   });
 
@@ -77,7 +77,7 @@ function ContactForm() {
       )}
       <div className="bg-primary grid grid-cols-2 items-center gap-4 rounded-xl p-4 shadow-md md:p-8">
         <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
-          <h1 className="text-4xl font-bold text-white">
+          <h1 className="text-center text-2xl font-bold text-white md:text-left md:text-4xl">
             Kết nối với chúng tôi
           </h1>
           <p className="text-md max-w-lg text-center text-white lg:text-left">

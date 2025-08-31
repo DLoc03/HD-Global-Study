@@ -11,6 +11,11 @@ import nam_truong from "@assets/photos/nam_truong.jpg";
 import quang_linh from "@assets/photos/quang_linh.jpeg";
 import thuy_linh from "@assets/photos/thuy_linh.jpeg";
 
+import school from "@assets/photos/school.png";
+import profile from "@assets/photos/profile.png";
+import airplane from "@assets/photos/airplane.png";
+import smile from "@assets/photos/smiling-face.png";
+
 const PATHS = {
   HOME: "/",
   ABOUT: "/about",
@@ -70,6 +75,10 @@ const IMAGE_MAP = {
   thuy_linh,
   dang_khoa,
   nam_truong,
+  school,
+  airplane,
+  smile,
+  profile,
 };
 
 const USER_MAP = [

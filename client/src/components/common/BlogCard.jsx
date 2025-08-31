@@ -12,7 +12,9 @@ function BlogCard({ blog }) {
       />
       <div className="flex flex-col gap-2 p-4">
         <p className="text-sm font-light">{convertDateTime(blog.date)}</p>
-        <h1 className="line-clamp-2 text-xl font-medium">{blog.title}</h1>
+        <h1 className="line-clamp-2 min-h-14 text-xl font-medium">
+          {blog.title}
+        </h1>
         <p className="text-md line-clamp-4">{blog.description}</p>
       </div>
     </div>

@@ -10,7 +10,7 @@ function Overview() {
   const handleNavigate = useCommonNavigate();
   return (
     <div className="flex w-full flex-col items-center space-y-4">
-      <h1 className="text-primary text-center text-6xl font-bold">
+      <h1 className="text-primary text-center text-4xl font-bold md:text-6xl">
         HD GLOBAL STUDY
       </h1>
       <h2 className="text-secondary text-center text-2xl font-medium">

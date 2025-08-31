@@ -7,7 +7,6 @@ function ServiceCard({ service, avatar }) {
         src={avatar}
         alt={service.name}
         style={{ width: "80px", height: "80px" }}
-        className="rounded-full"
       />
       <h1 className="text-primary max-w-[172px] text-center font-medium">
         {service.title}
