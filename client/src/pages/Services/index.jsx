@@ -17,7 +17,7 @@ function Service() {
         Global Study tiếp tục đồng hành, chắp cánh giấc mơ Mỹ cho các bạn trẻ
         Việt Nam.
       </p>
-      <div className="grid w-full grid-cols-6">
+      <div className="lg:grid-col-6 grid w-full grid-cols-2 md:grid-cols-4">
         {services.map((service) => (
           <div className="span-col-1" key={service.id}>
             <ServiceCard service={service} avatar={IMAGE_MAP[service.key]} />

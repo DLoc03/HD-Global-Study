@@ -17,7 +17,7 @@ function IntroductionCard({ info, image }) {
           <img
             src={image}
             alt={info.name}
-            style={{ width: "100%", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
             className="rounded-2xl"
           />
         </div>

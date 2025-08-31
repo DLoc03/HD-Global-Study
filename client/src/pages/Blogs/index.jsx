@@ -13,7 +13,7 @@ function Blog() {
         phân tích bởi{" "}
         <span className="text-primary font-bold">HD Global Study</span>.
       </p>
-      <div className="mt-2 grid grid-cols-4 gap-8 space-y-2">
+      <div className="mt-2 grid grid-cols-1 gap-8 space-y-2 md:grid-cols-2 xl:grid-cols-4">
         {blogs.map((blog) => (
           <div className="span-col-1" key={blog.id}>
             <BlogCard blog={blog} />

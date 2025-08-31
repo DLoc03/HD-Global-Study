@@ -1,9 +1,15 @@
+import { PATHS } from "@/constants";
+import { useCommonNavigate } from "@/contexts/HandleNavigate";
 import { convertDateTime } from "@/utils";
 import React from "react";
 
 function BlogCard({ blog }) {
+  const handleNavigate = useCommonNavigate();
   return (
-    <div className="shadow-main flex h-full cursor-pointer flex-col gap-1 rounded-xl">
+    <div
+      className="shadow-main flex h-full cursor-pointer flex-col gap-1 rounded-xl"
+      onClick={() => handleNavigate(PATHS.BLOG_CONTENT.replace(":id", blog.id))}
+    >
       <img
         src={blog.image}
         alt={blog.name}

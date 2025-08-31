@@ -22,6 +22,7 @@ const PATHS = {
   SERVICE: "/service",
   ADVANTAGE: "/why-choose-hd-global-study",
   BLOG: "/blogs",
+  BLOG_CONTENT: "/blogs/:id",
   GALLERY: "/gallery",
   CONTACT: "/contact",
   REAL_STORY: "/real-life-in-american",

@@ -2,6 +2,7 @@ import { PATHS } from "@/constants";
 import About from "@/pages/About";
 import Advantage from "@/pages/Advantage";
 import Blog from "@/pages/Blogs";
+import BlogContent from "@/pages/Blogs/_id";
 import Gallery from "@/pages/Gallery";
 
 import Home from "@/pages/Home";
@@ -31,6 +32,10 @@ const routes = [
   {
     path: PATHS.GALLERY,
     page: Gallery,
+  },
+  {
+    path: PATHS.BLOG_CONTENT,
+    page: BlogContent,
   },
 ];
 
