@@ -17,7 +17,7 @@ function RedirectPath({ path }) {
     }
   }, [id]);
   return (
-    <div className="text-primary mx-auto flex w-full max-w-[1440px] items-center gap-4 px-2 xl:px-0">
+    <div className="text-primary mx-auto flex w-full max-w-[1440px] items-center gap-4 px-4 xl:px-0">
       <Link to={PATHS.HOME}>
         <IoMdHome fontSize={"24px"} />
       </Link>
