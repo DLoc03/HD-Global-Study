@@ -6,16 +6,27 @@ import { IoIosArrowForward } from "react-icons/io";
 import { Link, useParams } from "react-router-dom";
 
 import { blogs } from "@/datas/blogs.json";
+import { usePosts } from "@/hooks/usePost";
 
 function RedirectPath({ path }) {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [blog, setBlog] = useState();
+  const { getBySlug, loading, error } = usePosts();
+
   useEffect(() => {
-    if (id) {
-      const data = blogs.find((blog) => blog.id === Number(id));
-      setBlog(data.title);
-    }
-  }, [id]);
+    if (!slug) return;
+
+    const fetchBlog = async () => {
+      try {
+        const data = await getBySlug(slug);
+        setBlog(data?.post || null);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchBlog();
+  }, [slug, getBySlug]);
   return (
     <div className="text-primary mx-auto flex w-full max-w-[1440px] items-center gap-4 px-4 xl:px-0">
       <Link to={PATHS.HOME}>
@@ -25,10 +36,10 @@ function RedirectPath({ path }) {
       <Link to={path.path}>
         <p className="font-bold">{path?.name}</p>
       </Link>
-      {id && (
+      {slug && (
         <div className="flex items-center gap-4">
           <IoIosArrowForward />
-          <p className="line-clamp-1 font-bold">{blog}</p>
+          <p className="line-clamp-1 font-bold">{blog?.title}</p>
         </div>
       )}
     </div>

@@ -8,7 +8,9 @@ function BlogCard({ blog }) {
   return (
     <div
       className="shadow-main flex h-full cursor-pointer flex-col gap-1 rounded-xl"
-      onClick={() => handleNavigate(PATHS.BLOG_CONTENT.replace(":id", blog.id))}
+      onClick={() =>
+        handleNavigate(PATHS.BLOG_CONTENT.replace(":slug", blog?.slug))
+      }
     >
       <img
         src={blog.image}
@@ -17,7 +19,7 @@ function BlogCard({ blog }) {
         className="rounded-t-xl"
       />
       <div className="flex flex-col gap-2 p-4">
-        <p className="text-sm font-light">{convertDateTime(blog.date)}</p>
+        <p className="text-sm font-light">{convertDateTime(blog.created_at)}</p>
         <h1 className="line-clamp-2 min-h-14 text-xl font-medium">
           {blog.title}
         </h1>

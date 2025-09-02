@@ -4,9 +4,12 @@ import { routes } from "./routers";
 import ScrollToTop from "./contexts/ScrollToTop";
 import DefaultLayout from "./components/layout/DefaultLayout";
 
+import { AuthProvider } from "./contexts/AuthContext";
+import Auth from "./pages/Auth";
+
 function App() {
   return (
-    <>
+    <AuthProvider>
       <ScrollToTop />
       <Routes>
         {routes.map(({ path, page: Page }) => (
@@ -20,8 +23,9 @@ function App() {
             }
           />
         ))}
+        <Route path="/login" element={<Auth />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }
 

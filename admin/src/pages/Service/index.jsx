@@ -5,7 +5,7 @@ function Service() {
   const handleSave = (content) => {
     console.log("Nội dung lưu:", content);
   };
-  return <RichTextEditor onSave={handleSave} />;
+  return <RichTextEditor onSubmit={handleSave} />;
 }
 
 export default Service;

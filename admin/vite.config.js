@@ -11,10 +11,14 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
       "@components": path.resolve(__dirname, "./src/components"),
       "@assets": path.resolve(__dirname, "./src/assets"),
+      tinymce: path.resolve("node_modules/tinymce"),
     },
   },
   server: {
     open: true,
     port: 5174,
+  },
+  optimizeDeps: {
+    include: ["tinymce/tinymce"],
   },
 });
