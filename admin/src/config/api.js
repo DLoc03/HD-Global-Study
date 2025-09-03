@@ -43,6 +43,8 @@ export function useApi() {
   const request = useCallback(async (config) => {
     setLoading(true);
     setError(null);
+    const start = Date.now();
+
     try {
       const response = await api(config);
       return response.data;
@@ -50,7 +52,15 @@ export function useApi() {
       setError(err.response?.data || err.message);
       throw err;
     } finally {
-      setLoading(false);
+      const elapsed = Date.now() - start;
+      const minDelay = 500;
+      const remaining = minDelay - elapsed;
+
+      if (remaining > 0) {
+        setTimeout(() => setLoading(false), remaining);
+      } else {
+        setLoading(false);
+      }
     }
   }, []);
 

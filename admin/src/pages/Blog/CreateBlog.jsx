@@ -51,7 +51,10 @@ export default function CreateBlog() {
     const { title, content, description, image } = formData;
 
     if (!title || !content) {
-      alert("Vui lòng nhập đầy đủ tiêu đề và nội dung");
+      setAlert({
+        type: "warning",
+        message: "Tên blog/nội dung không được để trống",
+      });
       return;
     }
 

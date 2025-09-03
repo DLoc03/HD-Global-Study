@@ -13,27 +13,64 @@ $input = json_decode(file_get_contents('php://input'), true);
 
 switch ("$method $uri") {
 
-   case 'GET /':
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10; 
-    $result = $posts->list($page, $limit);
-    echo json_encode($result);
-    break;
-
-   case 'GET /get':
-    header('Content-Type: application/json');
-    $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-    if ($id <= 0) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Invalid post ID'
-        ]);
+    case 'GET /':
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10; 
+        echo json_encode($posts->list($page, $limit));
         break;
-    }
-    $result = $posts->get($id);
-    echo json_encode($result);
-    break;
 
+    case 'GET /get':
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        if ($id <= 0) {
+            echo json_encode(['success' => false, 'message' => 'Invalid post ID']);
+            break;
+        }
+        echo json_encode($posts->get($id));
+        break;
+
+    case 'GET /detail':
+        $slug = $_GET['slug'] ?? '';
+        if (!$slug) {
+            echo json_encode(['success' => false, 'message' => 'Slug is required']);
+            break;
+        }
+        echo json_encode($posts->getBySlug($slug));
+        break;
+
+    case 'GET /byType':
+        $type = $_GET['type'] ?? '';
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+        echo json_encode($posts->getListByType($type, $page, $limit));
+        break;
+
+    case 'GET /byTitle':
+        $title  = $_GET['title'] ?? '';
+        $status = $_GET['status'] ?? '';
+        $page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit  = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+        echo json_encode($posts->getListByTitle($title, $status, $page, $limit));
+        break;
+
+
+    case 'GET /byStatus':
+        $status = $_GET['status'] ?? '';
+        $title = $_GET['title'] ?? '';
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+        $order = $_GET['order'] ?? 'DESC';
+        
+        $result = $posts->getListByStatus($status, $page, $limit, $order, $title);
+        $result['items'] = $posts->sortByDate($result['items'], $order);
+        echo json_encode($result);
+        break;
+
+
+    case 'POST /updateStatus':
+        $id = $input['id'] ?? ($_GET['id'] ?? 0);
+        $status = $input['status'] ?? ($_GET['status'] ?? '');
+        echo json_encode($posts->updateStatus((int)$id, $status));
+        break;
 
     case 'POST /create':
         $input = $_POST;
@@ -56,19 +93,6 @@ switch ("$method $uri") {
         $id = $_GET['id'] ?? 0;
         echo json_encode($posts->delete((int)$id));
         break;
-    case 'GET /detail':
-    $slug = $_GET['slug'] ?? '';
-    if (!$slug) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Slug is required'
-        ]);
-        break;
-    }
-    $result = $posts->getBySlug($slug);
-    echo json_encode($result);
-    break;
-
 
     default:
         http_response_code(404);

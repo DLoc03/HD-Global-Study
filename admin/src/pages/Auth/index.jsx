@@ -33,7 +33,7 @@ function Auth() {
           message: "Đăng nhập thành công",
         });
         setTimeout(() => {
-          navigate(PATHS.DASHBOARD);
+          navigate(PATHS.BLOG);
         }, [1500]);
       } else {
         setAlert({

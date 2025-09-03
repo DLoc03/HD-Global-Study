@@ -74,7 +74,149 @@ public function getBySlug(string $slug): array {
     return ['success' => true, 'post' => $post];
 }
 
+public function getListByType(string $type, int $page = 1, int $limit = 10): array {
+    $offset = ($page - 1) * $limit;
 
+    $totalStmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE type = :type");
+    $totalStmt->execute(['type' => $type]);
+    $totalItem = (int)$totalStmt->fetchColumn();
+
+    $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE type = :type ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+    $stmt->bindValue(':type', $type);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($items as &$item) {
+        $item['image'] = $this->encodeImage($item['image']);
+    }
+
+    return [
+        'success' => true,
+        'items' => $items,
+        'totalItem' => $totalItem,
+        'itemPerPage' => $limit,
+        'currentPage' => $page,
+        'totalPage' => ceil($totalItem / $limit),
+    ];
+}
+
+public function getListByTitle(string $keyword, string $status = '', int $page = 1, int $limit = 10): array {
+    $offset = ($page - 1) * $limit;
+    $search = "%$keyword%";
+
+    $where = "title LIKE :keyword";
+    $params = ['keyword' => $search];
+
+    if ($status !== '') {
+        $where .= " AND status = :status";
+        $params['status'] = $status;
+    }
+
+    // count total
+    $totalStmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE $where");
+    $totalStmt->execute($params);
+    $totalItem = (int)$totalStmt->fetchColumn();
+
+    // get items
+    $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE $where ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+    foreach ($params as $key => $value) {
+        $stmt->bindValue(":$key", $value);
+    }
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($items as &$item) {
+        $item['image'] = $this->encodeImage($item['image']);
+    }
+
+    return [
+        'success' => true,
+        'items' => $items,
+        'totalItem' => $totalItem,
+        'itemPerPage' => $limit,
+        'currentPage' => $page,
+        'totalPage' => ceil($totalItem / $limit),
+    ];
+}
+
+
+public function getListByStatus(string $status, int $page = 1, int $limit = 10, string $order = 'DESC', string $title = ''): array {
+    $offset = ($page - 1) * $limit;
+    $order = strtoupper($order) === 'ASC' ? 'ASC' : 'DESC';
+
+    $totalSql = "SELECT COUNT(*) FROM posts WHERE status = :status";
+    if ($title !== '') {
+        $totalSql .= " AND title LIKE :title";
+    }
+    $totalStmt = $this->pdo->prepare($totalSql);
+    $totalStmt->bindValue(':status', $status);
+    if ($title !== '') {
+        $totalStmt->bindValue(':title', "%$title%");
+    }
+    $totalStmt->execute();
+    $totalItem = (int)$totalStmt->fetchColumn();
+
+    $sql = "SELECT * FROM posts WHERE status = :status";
+    if ($title !== '') {
+        $sql .= " AND title LIKE :title";
+    }
+    $sql .= " ORDER BY created_at $order LIMIT :limit OFFSET :offset";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':status', $status);
+    if ($title !== '') {
+        $stmt->bindValue(':title', "%$title%");
+    }
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($items as &$item) {
+        $item['image'] = $this->encodeImage($item['image']);
+    }
+
+    return [
+        'success' => true,
+        'items' => $items,
+        'totalItem' => $totalItem,
+        'itemPerPage' => $limit,
+        'currentPage' => $page,
+        'totalPage' => ceil($totalItem / $limit),
+    ];
+}
+
+
+public function sortByDate(array $posts, string $order = 'DESC'): array {
+    usort($posts, function($a, $b) use ($order) {
+        $timeA = strtotime($a['created_at']);
+        $timeB = strtotime($b['created_at']);
+        return $order === 'ASC' ? $timeA - $timeB : $timeB - $timeA;
+    });
+    return $posts;
+}
+
+public function updateStatus(int $id, string $status): array {
+    $admin = $this->auth->getAdminFromToken();
+    if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+
+    $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE id = ?");
+    $stmt->execute([$id]);
+    $post = $stmt->fetch();
+    if (!$post) return ['success' => false, 'message' => 'Không tìm thấy bài viết'];
+
+    $stmt = $this->pdo->prepare("UPDATE posts SET status=:status, updated_at=CURRENT_TIMESTAMP WHERE id=:id");
+    $stmt->execute([
+        'status' => $status,
+        'id' => $id
+    ]);
+
+    return ['success' => true, 'message' => 'Đã cập nhật trạng thái bài viết'];
+}
 
    public function create(array $data, array $files = []): array {
     $title = $data['title'] ?? '';

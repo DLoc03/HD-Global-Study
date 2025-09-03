@@ -2,8 +2,8 @@ import CommonAlert from "@/components/common/CommonAlert";
 import CommonButton from "@/components/common/CommonButton";
 import CommonFormPopup from "@/components/common/CommonFormPopup";
 import CommonInput from "@/components/common/CommonInput";
-import { useApi } from "@/config/api";
-import React, { useState } from "react";
+import { useApi, useAuth } from "@/config/api";
+import React, { useEffect, useState } from "react";
 
 function Setting() {
   const [open, setOpen] = useState(false);
@@ -15,6 +15,8 @@ function Setting() {
   const [username, setUsername] = useState();
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();
+
+  const [viewName, setViewName] = useState();
 
   const handleOpen = (type) => {
     setFormType(type);
@@ -65,6 +67,7 @@ function Setting() {
       )}
       <h1 className="text-xl">Cập nhật tài khoản quản trị viên</h1>
       <div className="mb-4 border-b border-gray-200" />
+      {/* <div className="flex gap-2">Thông tin quản trị: {viewName}</div> */}
       <div className="flex max-w-md items-center justify-between gap-2">
         <p className="text-sm">Cập nhật tên đăng nhập?</p>
         <CommonButton
@@ -95,6 +98,7 @@ function Setting() {
             ? "Cập nhật tên đăng nhập"
             : "Cập nhật mật khẩu đăng nhập"
         }
+        className={"max-w-xl"}
         footer={
           <>
             <CommonButton

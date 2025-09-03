@@ -1,20 +1,35 @@
 import { BLOGTYPE_MAP, PATHS } from "@/constants";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiMoreVertical } from "react-icons/fi";
 import CommonButton from "../common/CommonButton";
 import CommonFormPopup from "../common/CommonFormPopup";
 import BlogOverview from "../common/BlogOverview";
 import { useCommonNavigate } from "@/contexts/HandleNavigate";
-import { useApi } from "@/config/api";
 
-function BlogTable({ blogs, onDelete }) {
+function BlogTable({ blogs, onDelete, onHide }) {
   const [openMenuId, setOpenMenuId] = useState(null);
-
   const [open, setOpen] = useState(false);
   const [formType, setFormType] = useState();
   const [selectBlogID, setSelectBlogID] = useState();
 
+  const menuRefs = useRef({});
   const navigate = useCommonNavigate();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        openMenuId &&
+        menuRefs.current[openMenuId] &&
+        !menuRefs.current[openMenuId].contains(event.target)
+      ) {
+        setOpenMenuId(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenuId]);
 
   const toggleMenu = (id) => {
     setOpenMenuId(openMenuId === id ? null : id);
@@ -24,16 +39,19 @@ function BlogTable({ blogs, onDelete }) {
     setFormType("view");
     setSelectBlogID(blog.id);
     setOpen(true);
+    setOpenMenuId(null);
   };
 
   const handleEdit = (blog) => {
     navigate(PATHS.EDIT_BLOG.replace(":id", blog.id));
+    setOpenMenuId(null);
   };
 
   const handleOpenDelete = (blog) => {
     setFormType("delete");
     setSelectBlogID(blog.id);
     setOpen(true);
+    setOpenMenuId(null);
   };
 
   return (
@@ -42,10 +60,11 @@ function BlogTable({ blogs, onDelete }) {
         <thead className="border-b-1 border-gray-200 pb-2">
           <tr>
             <th className="w-1/6 text-left">Bài viết</th>
-            <th className="w-1/2 text-left">Tiêu đề</th>
+            <th className="w-1/3 text-left">Tiêu đề</th>
             <th className="w-1/6 text-left">Danh mục</th>
-            <th className="w-1/2 text-left">Ngày đăng</th>
-            <th className="w-1/3 text-left"></th>
+            <th className="w-1/6 text-left">Ngày đăng</th>
+            <th className="w-1/2 text-left">Trạng thái hiển thị</th>
+            <th className="w-1/6 text-left"></th>
           </tr>
         </thead>
         <tbody>
@@ -57,10 +76,22 @@ function BlogTable({ blogs, onDelete }) {
                   className="h-20 rounded-xl object-cover"
                 />
               </td>
-              <td className="text-left">{blog.title}</td>
+              <td>{blog.title}</td>
               <td>{BLOGTYPE_MAP[blog.type]}</td>
               <td>{blog.created_at}</td>
-              <td className="relative">
+              <td
+                className={
+                  blog.status === "published"
+                    ? "text-green-600"
+                    : "text-red-500"
+                }
+              >
+                {blog.status === "published" ? "Hiển thị" : "Đã ẩn"}
+              </td>
+              <td
+                className="relative"
+                ref={(el) => (menuRefs.current[blog.id] = el)}
+              >
                 <CommonButton
                   onClick={() => toggleMenu(blog.id)}
                   className="rounded-full p-2 hover:bg-gray-100"
@@ -84,6 +115,20 @@ function BlogTable({ blogs, onDelete }) {
                         Sửa
                       </li>
                       <li
+                        onClick={() =>
+                          onHide(
+                            blog.id,
+                            blog.status === "published" ? "draft" : "published",
+                          )
+                        }
+                        className="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                      >
+                        {blog.status === "published"
+                          ? "Ẩn bài viết"
+                          : "Hiển thị bài viết"}
+                      </li>
+
+                      <li
                         onClick={() => handleOpenDelete(blog)}
                         className="cursor-pointer px-4 py-2 text-red-500 hover:bg-red-100"
                       >
@@ -97,13 +142,14 @@ function BlogTable({ blogs, onDelete }) {
           ))}
         </tbody>
       </table>
+
       <CommonFormPopup
         isOpen={open}
         onClose={() => setOpen(false)}
         title={
           formType === "view"
             ? "Bản xem trước nội dung"
-            : "Bạn có chắc muỗn xoá?"
+            : "Bạn có chắc muốn xoá?"
         }
         className={formType === "view" ? "max-w-4xl" : "max-w-md"}
         footer={
@@ -113,10 +159,7 @@ function BlogTable({ blogs, onDelete }) {
                 className={"w-full rounded-full bg-red-500 text-white"}
                 onClick={() => {
                   onDelete(selectBlogID);
-                  (setTimeout(() => {
-                    setOpen(false);
-                  }),
-                    [500]);
+                  setTimeout(() => setOpen(false), 500);
                 }}
               >
                 Xoá

@@ -1,9 +1,7 @@
 <?php
 function generateSlug(string $title): string {
-    // Chuyển về lowercase
     $slug = mb_strtolower($title, 'UTF-8');
 
-    // Bỏ dấu tiếng Việt
     $slug = str_replace(
         ['à','á','ạ','ả','ã','â','ầ','ấ','ậ','ẩ','ẫ','ă','ằ','ắ','ặ','ẳ','ẵ',
          'è','é','ẹ','ẻ','ẽ','ê','ề','ế','ệ','ể','ễ',
@@ -22,10 +20,8 @@ function generateSlug(string $title): string {
         $slug
     );
 
-    // Chuyển khoảng trắng và ký tự đặc biệt thành dấu '-'
     $slug = preg_replace('/[^a-z0-9]+/i', '-', $slug);
 
-    // Xóa dấu '-' ở đầu và cuối
     $slug = trim($slug, '-');
 
     return $slug;

@@ -6,9 +6,11 @@ export function usePosts() {
   const [posts, setPosts] = useState({ items: [], total: 0 });
 
   const getAll = useCallback(
-    async (page = 1, limit = 10) => {
+    async (page = 1, limit = 10, status = "published") => {
       try {
-        const data = await get(`/post/?page=${page}&limit=${limit}`);
+        const data = await get(
+          `/post/byStatus?status=${status}&page=${page}&limit=${limit}&order=DESC`,
+        );
         setPosts(data);
       } catch (err) {
         console.error(err);

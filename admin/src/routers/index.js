@@ -1,10 +1,11 @@
 import { PATHS } from "@/constants";
-import Auth from "@/pages/Auth";
 import Blog from "@/pages/Blog";
 import CreateBlog from "@/pages/Blog/CreateBlog";
 import EditBlog from "@/pages/Blog/EditBlog";
 import Dashboard from "@/pages/Dashboard";
 import Gallery from "@/pages/Gallery";
+import ImageList from "@/pages/Gallery/_id";
+import ImageHiding from "@/pages/Gallery/ImageHiding";
 import Service from "@/pages/Service";
 import Setting from "@/pages/Setting";
 
@@ -15,6 +16,10 @@ const routes = [
   },
   {
     path: PATHS.BLOG,
+    page: Blog,
+  },
+  {
+    path: PATHS.HIDING_BLOG,
     page: Blog,
   },
   {
@@ -36,6 +41,22 @@ const routes = [
   {
     path: PATHS.EDIT_BLOG,
     page: EditBlog,
+  },
+  {
+    path: PATHS.ALBUM_ALL,
+    page: Gallery,
+  },
+  {
+    path: PATHS.IMAGE_LIST,
+    page: ImageList,
+  },
+  {
+    path: PATHS.HIDING_ALBUM,
+    page: Gallery,
+  },
+  {
+    path: PATHS.HIDING_IMAGE,
+    page: ImageHiding,
   },
 ];
 
