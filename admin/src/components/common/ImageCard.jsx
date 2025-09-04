@@ -161,7 +161,7 @@ function ImageCard({ image, isShowHide = true, onReload }) {
         />
       </div>
       {openMenuId === image?.id && (
-        <div className="shadow-main absolute mt-46 ml-40 w-40 rounded-lg bg-white">
+        <div className="shadow-main absolute mt-46 ml-32 w-40 rounded-lg bg-white">
           <ul>
             <li
               onClick={() => handleOpenMove(image)}
