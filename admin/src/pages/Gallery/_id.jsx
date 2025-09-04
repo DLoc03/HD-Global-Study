@@ -12,17 +12,20 @@ import CommonFormPopup from "@/components/common/CommonFormPopup";
 import CommonInput from "@/components/common/CommonInput";
 import { useCommonNavigate } from "@/contexts/HandleNavigate";
 import { PATHS } from "@/constants";
+import Pagination from "@/components/common/Pagination";
 
 function ImageList() {
   const { id } = useParams();
   const [album, setAlbum] = useState();
   const [images, setImages] = useState();
-  const config = { album_id: id, page: 1, limit: 12, status: "published" };
   const { get, post, put, del, loading } = useApi();
   const [reload, setReload] = useState(false);
 
   const [formType, setFormType] = useState();
   const [openForm, setOpenForm] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 12;
 
   const [alert, setAlert] = useState();
 
@@ -46,17 +49,28 @@ function ImageList() {
   }, [reload, get, id]);
 
   useEffect(() => {
-    if (!id) return null;
+    if (!id) return;
     const fetchImages = async () => {
       try {
-        const res = await get("/image/list", { params: config });
-        setImages(res);
+        const res = await get("/image/list", {
+          params: {
+            album_id: id,
+            page: currentPage,
+            limit,
+            status: "published",
+          },
+        });
+        setImages({
+          items: res.items || [],
+          totalPage: res.totalPage || 1,
+          currentPage: res.currentPage || 1,
+        });
       } catch (err) {
         console.log(err);
       }
     };
     fetchImages();
-  }, [get, reload]);
+  }, [id, get, reload, currentPage]);
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
@@ -284,13 +298,16 @@ function ImageList() {
             ảnh
           </h1>
         ) : (
-          <div className="grid grid-cols-6 gap-8">
-            <h1 className="text-primary text-md col-span-8 text-center">
+          <div className="grid w-full grid-cols-6 gap-8">
+            <h1 className="text-primary text-md col-span-6 text-center">
               Danh sách ảnh album{" "}
               <span className="font-bold">{album?.name}</span>
             </h1>
             {images?.items?.map((image) => (
-              <div key={image.id} className="col-span-1">
+              <div
+                key={image.id}
+                className="col-span-6 md:col-span-3 xl:col-span-1"
+              >
                 <ImageCard image={image} onReload={() => setReload(!reload)} />
               </div>
             ))}
@@ -302,7 +319,7 @@ function ImageList() {
           formType === "hide"
             ? "Bạn có chắc muốn ẩn album này?"
             : formType === "delete"
-              ? "Bạn có chắc muốn xoá album này?"
+              ? "Bạn có chắc muốn xoá album này? Toàn bộ ảnh trong album đều sẽ bị xoá?"
               : "Chỉnh sửa album"
         }
         isOpen={openForm}
@@ -344,6 +361,13 @@ function ImageList() {
           />
         )}
       </CommonFormPopup>
+      {images?.totalPage > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPage={images.totalPage}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      )}
     </div>
   );
 }

@@ -13,6 +13,7 @@ import { FaRegPlusSquare } from "react-icons/fa";
 import CommonInput from "@/components/common/CommonInput";
 import { useLocation } from "react-router-dom";
 import { IoIosRefresh } from "react-icons/io";
+import Pagination from "@/components/common/Pagination";
 
 function Blog() {
   const [blogs, setBlogs] = useState([]);
@@ -22,17 +23,9 @@ function Blog() {
   const [order, setOrder] = useState("DESC");
   const [search, setSearch] = useState();
   const location = useLocation();
-
-  const [config, setConfig] = useState({
-    page: 1,
-    limit: 3,
-    order: order,
-
-    status: location.pathname === PATHS.GALLERY ? "published" : "draft",
-    title: search,
-  });
-
-  console.log(location.pathname);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const limit = 3;
 
   const navigate = useCommonNavigate();
 
@@ -40,12 +33,16 @@ function Blog() {
     const fetchPosts = async () => {
       const status = location.pathname === PATHS.BLOG ? "published" : "draft";
       const res = await get("/post/byStatus", {
-        params: { page: 1, limit: 3, order, status, title: search },
+        params: { page: currentPage, limit, order, status, title: search },
       });
-      setBlogs(res);
+
+      setBlogs(res || []);
+      setCurrentPage(res.currentPage || 1);
+      setTotalPage(res.totalPage || 1);
     };
+
     fetchPosts();
-  }, [get, reload, order, location.pathname]);
+  }, [get, reload, order, location.pathname, currentPage, search]);
 
   const handleDelete = async (id) => {
     try {
@@ -100,7 +97,11 @@ function Blog() {
         </div>
       )}
       <div className="flex items-end justify-between border-b-1 border-gray-200 pb-4">
-        <h1 className="text-xl font-bold">Quản lý bài viết</h1>
+        <h1 className="text-xl font-bold">
+          {location.pathname === PATHS.BLOG
+            ? "Quản lý bài viết"
+            : "Bài viết bị ẩn"}
+        </h1>
         {location.pathname === "/" && (
           <CommonButton
             className={
@@ -165,6 +166,11 @@ function Blog() {
           />
         </div>
       )}
+      <Pagination
+        currentPage={currentPage}
+        totalPage={totalPage}
+        onPageChange={(p) => setCurrentPage(p)}
+      />
     </div>
   );
 }

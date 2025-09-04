@@ -46,7 +46,7 @@ switch ("$method $uri") {
         $albumId = $_GET['album_id'] ?? 0;
         $page    = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit   = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        echo json_encode($images->getByAlbum((int)$albumId, $page, $limit));
+        echo json_encode($images->list((int)$albumId, 'published',$page, $limit));
         break;
 
     case 'GET /get':

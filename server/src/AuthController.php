@@ -75,7 +75,7 @@ class AuthController {
     // --- Refresh token ---
     public function refresh(): array {
         $admin = $this->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $payload = [
             'admin_id' => $admin['id'],
@@ -97,7 +97,7 @@ class AuthController {
 
     public function changePassword(string $oldPassword, string $newPassword): array {
         $admin = $this->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         if (!password_verify($oldPassword, $admin['password'])) {
             return ['success' => false, 'message' => 'Sai mật khẩu cũ!'];
@@ -112,7 +112,7 @@ class AuthController {
 
     public function changeUsername(string $newUsername): array {
         $admin = $this->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $stmt = $this->pdo->prepare("UPDATE admins SET username = ? WHERE id = ?");
         $stmt->execute([$newUsername, $admin['id']]);

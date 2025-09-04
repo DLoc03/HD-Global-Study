@@ -24,6 +24,7 @@ const PATHS = {
   BLOG: "/blogs",
   BLOG_CONTENT: "/blogs/:slug",
   GALLERY: "/gallery",
+  IMAGE_LIST: "/gallery/:id",
   CONTACT: "/contact",
   REAL_STORY: "/real-life-in-american",
 };

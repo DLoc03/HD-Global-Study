@@ -92,41 +92,56 @@ class AlbumsController {
         $totalStmt = $this->pdo->query("SELECT COUNT(*) FROM albums WHERE status='published'");
         $totalItem = (int)$totalStmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT * FROM albums WHERE status='published' ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+        $stmt = $this->pdo->prepare("
+            SELECT * FROM albums 
+            WHERE status='published' 
+            ORDER BY created_at DESC 
+            LIMIT :limit OFFSET :offset
+        ");
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         $albums = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $filteredAlbums = [];
+
         foreach ($albums as &$album) {
             $albumId = $album['id'];
 
-            $stmtCover = $this->pdo->prepare("SELECT id, name, image_data FROM images WHERE album_id=:id AND status='published' ORDER BY id ASC LIMIT 1");
-            $stmtCover->execute(['id' => $albumId]);
-            $cover = $stmtCover->fetch(PDO::FETCH_ASSOC);
-            if ($cover) {
-                $cover['image_data'] = $this->encodeImage($cover['image_data']);
-            }
-            $album['cover_image'] = $cover;
-
-            $stmtDemo = $this->pdo->prepare("SELECT id, name, image_data FROM images WHERE album_id=:id AND status='published' ORDER BY id ASC LIMIT 3");
+            $stmtDemo = $this->pdo->prepare("
+                SELECT id, title, image_data 
+                FROM images 
+                WHERE album_id=:id AND status='published' 
+                ORDER BY id ASC 
+                LIMIT 3
+            ");
             $stmtDemo->execute(['id' => $albumId]);
             $demoImages = $stmtDemo->fetchAll(PDO::FETCH_ASSOC);
+
+            if (count($demoImages) === 0) {
+                continue;
+            }
+
             foreach ($demoImages as &$img) {
                 $img['image_data'] = $this->encodeImage($img['image_data']);
             }
             $album['demo_images'] = $demoImages;
+
+            $album['cover_image'] = $demoImages[0];
+
+            $filteredAlbums[] = $album;
         }
 
         return [
             'success' => true,
-            'items' => $albums,
-            'totalItem' => $totalItem,
+            'items' => $filteredAlbums,
+            'totalItem' => count($filteredAlbums),
             'itemPerPage' => $limit,
             'currentPage' => $page,
-            'totalPage' => ceil($totalItem / $limit),
+            'totalPage' => ceil(count($filteredAlbums) / $limit),
         ];
     }
+
 
     public function getImages(int $albumId): array {
         $stmt = $this->pdo->prepare("SELECT id, name, image_data FROM images WHERE album_id=:album_id AND status='published' ORDER BY created_at DESC");
@@ -146,7 +161,7 @@ class AlbumsController {
 
     public function create(array $data): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $name = trim($data['name'] ?? '');
         if (!$name) return ['success' => false, 'message' => 'Tên album không được để trống'];
@@ -168,7 +183,7 @@ class AlbumsController {
 
     public function update(int $id, array $data): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $stmt = $this->pdo->prepare("UPDATE albums SET name=:name, updated_at=NOW() WHERE id=:id");
         $stmt->execute([
@@ -181,7 +196,7 @@ class AlbumsController {
 
     public function delete(int $id): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $stmt = $this->pdo->prepare("DELETE FROM albums WHERE id=:id");
         $stmt->execute(['id' => $id]);
@@ -191,7 +206,7 @@ class AlbumsController {
 
     public function updateStatus(int $id, string $status): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $stmt = $this->pdo->prepare("UPDATE albums SET status=:status, updated_at=NOW() WHERE id=:id");
         $stmt->execute([

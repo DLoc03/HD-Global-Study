@@ -151,7 +151,7 @@ function ImageCard({ image, isShowHide = true, onReload }) {
         onClick={() => handleOpenView(image)}
       />
       <div className="flex items-center justify-between">
-        <h1 className="text-primary line-clamp-1 max-w-[140px] text-sm overflow-ellipsis">
+        <h1 className="text-primary line-clamp-1 max-w-[100px] text-sm overflow-ellipsis">
           {image?.title}
         </h1>
         <IoMdMore

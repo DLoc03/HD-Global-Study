@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS posts (
     slug VARCHAR(255) NOT NULL UNIQUE,
     content TEXT,
     type VARCHAR(50) NOT NULL DEFAULT 'blog',
-    status ENUM('draft','published') DEFAULT 'draft',
+    status ENUM('draft','published') DEFAULT 'published',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

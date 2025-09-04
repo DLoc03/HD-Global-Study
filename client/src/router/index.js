@@ -4,6 +4,7 @@ import Advantage from "@/pages/Advantage";
 import Blog from "@/pages/Blogs";
 import BlogContent from "@/pages/Blogs/_id";
 import Gallery from "@/pages/Gallery";
+import AlbumDetail from "@/pages/Gallery/_id";
 
 import Home from "@/pages/Home";
 import Service from "@/pages/Services";
@@ -36,6 +37,10 @@ const routes = [
   {
     path: PATHS.BLOG_CONTENT,
     page: BlogContent,
+  },
+  {
+    path: PATHS.IMAGE_LIST,
+    page: AlbumDetail,
   },
 ];
 

@@ -202,7 +202,7 @@ public function sortByDate(array $posts, string $order = 'DESC'): array {
 
 public function updateStatus(int $id, string $status): array {
     $admin = $this->auth->getAdminFromToken();
-    if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+    if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
     $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE id = ?");
     $stmt->execute([$id]);
@@ -247,7 +247,7 @@ public function updateStatus(int $id, string $status): array {
 
 public function updateWithImage(int $id, array $data, array $files = []): array {
     $admin = $this->auth->getAdminFromToken();
-    if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+    if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
     $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE id = ?");
     $stmt->execute([$id]);
@@ -288,7 +288,7 @@ public function updateWithImage(int $id, array $data, array $files = []): array 
 
     public function update(int $id, array $data): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE id = ?");
         $stmt->execute([$id]);
@@ -319,7 +319,7 @@ public function updateWithImage(int $id, array $data, array $files = []): array 
 
     public function delete(int $id): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $stmt = $this->pdo->prepare("DELETE FROM posts WHERE id = ?");
         $stmt->execute([$id]);

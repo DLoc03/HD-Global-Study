@@ -95,7 +95,7 @@ class ImagesController {
 
     public function delete(int $id): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $stmt = $this->pdo->prepare("DELETE FROM images WHERE id=:id");
         $stmt->execute(['id' => $id]);
@@ -105,7 +105,7 @@ class ImagesController {
 
     public function updateAlbum(int $id, int $albumId): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $stmt = $this->pdo->prepare("UPDATE images SET album_id=:album_id, updated_at=NOW() WHERE id=:id");
         $stmt->execute(['album_id' => $albumId, 'id' => $id]);
@@ -115,7 +115,7 @@ class ImagesController {
 
     public function updateStatus(int $id, string $status): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Unauthorized'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
 
         $stmt = $this->pdo->prepare("UPDATE images SET status=:status, updated_at=NOW() WHERE id=:id");
         $stmt->execute(['status' => $status, 'id' => $id]);

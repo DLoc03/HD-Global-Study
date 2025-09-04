@@ -1,4 +1,5 @@
 import ImageCard from "@/components/common/ImageCard";
+import Pagination from "@/components/common/Pagination";
 import SpinningLoading from "@/components/common/SpinningLoading";
 import { useApi } from "@/config/api";
 import React, { useEffect, useState } from "react";
@@ -7,20 +8,27 @@ function ImageHiding() {
   const [images, setImages] = useState([]);
   const { get, loading } = useApi();
   const [reload, setReload] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 20;
 
   useEffect(() => {
     const fetchImagesByStatus = async () => {
       try {
-        const res = await get(
-          `/image/listByStatus?status=draft&page=1&limit=20`,
-        );
-        if (res?.success) setImages(res);
+        const res = await get("/image/listByStatus", {
+          params: { status: "draft", page: currentPage, limit },
+        });
+        if (res?.success)
+          setImages({
+            items: res.items || [],
+            totalPage: res.totalPage || 1,
+            currentPage: res.currentPage || 1,
+          });
       } catch (err) {
         console.log(err);
       }
     };
     fetchImagesByStatus();
-  }, [get, reload]);
+  }, [get, reload, currentPage]);
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -47,6 +55,13 @@ function ImageHiding() {
           </div>
         )}
       </div>
+      {images.totalPage > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPage={images.totalPage}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      )}
     </div>
   );
 }
