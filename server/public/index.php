@@ -39,6 +39,8 @@ if (preg_match('#^/auth#', $uri)) {
     require __DIR__ . '/../routes/album.php';
 } elseif (preg_match('#^/image#', $uri)) {
     require __DIR__ . '/../routes/image.php';
+} elseif (preg_match('#^/mail#', $uri)) {
+    require __DIR__ . '/../routes/email.php';
 } else {
     http_response_code(404);
     echo json_encode(["error" => "Not Found"]);

@@ -64,7 +64,7 @@ function ContactForm() {
       type: "success",
       message: "Gửi thành công!",
     });
-    // console.log("Form now: ", formData);
+    console.log("Form now: ", formData);
   };
   return (
     <>
@@ -134,8 +134,8 @@ function ContactForm() {
           <CommonSelectInput
             label="Chọn dịch vụ tư vấn"
             options={services}
-            value={formData.service}
-            onChange={(val) => handleChange("service", val)}
+            value={formData.service.title}
+            onChange={(val) => handleChange("service", val.title)}
           />
           <CommonTextAutoSize
             placeholder="Để lại cho chúng tôi lời nhắn nếu bạn muốn gửi gắm gì đó tại đây nhé"
