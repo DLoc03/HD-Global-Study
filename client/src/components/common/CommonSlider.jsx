@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import CommonButton from "./CommonButton";
+import CommonFadeContainer from "./CommonFadeContainer";
+import CommonFade from "./CommonFade";
 
 function CommonSlider({ items = [], itemsPerSlide = 3, className = "" }) {
   const [current, setCurrent] = useState(0);
@@ -22,7 +24,8 @@ function CommonSlider({ items = [], itemsPerSlide = 3, className = "" }) {
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {Array.from({ length: totalSlides }).map((_, slideIndex) => (
-          <div
+          <CommonFadeContainer
+            stagger={0.2}
             key={slideIndex}
             className="flex w-full flex-shrink-0 gap-4 px-2"
           >
@@ -32,11 +35,11 @@ function CommonSlider({ items = [], itemsPerSlide = 3, className = "" }) {
                 slideIndex * itemsPerSlide + itemsPerSlide,
               )
               .map((item, idx) => (
-                <div key={idx} className="flex-1">
+                <CommonFade key={idx} className="flex-1">
                   {item}
-                </div>
+                </CommonFade>
               ))}
-          </div>
+          </CommonFadeContainer>
         ))}
       </div>
       {totalSlides > 1 && (

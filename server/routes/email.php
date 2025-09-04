@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../src/MailController.php';
+require_once __DIR__ . '/../src/EmailController.php';
 
 header('Content-Type: application/json');
 

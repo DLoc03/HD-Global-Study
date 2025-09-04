@@ -20,7 +20,7 @@ function Gallery() {
     <div className="flex w-full flex-col items-center">
       {loading && <SpinningLoading />}
 
-      <h1 className="text-primary mb-8 text-center text-4xl font-bold">
+      <h1 className="text-primary mb-8 text-center text-3xl font-bold md:text-4xl">
         Câu chuyện qua những khoảnh khắc
       </h1>
 

@@ -41,6 +41,10 @@ if (preg_match('#^/auth#', $uri)) {
     require __DIR__ . '/../routes/image.php';
 } elseif (preg_match('#^/mail#', $uri)) {
     require __DIR__ . '/../routes/email.php';
+} elseif (preg_match('#^/category#', $uri)) {
+    require __DIR__ . '/../routes/category.php';
+} elseif (preg_match('#^/service#', $uri)) {
+    require __DIR__ . '/../routes/category.php';
 } else {
     http_response_code(404);
     echo json_encode(["error" => "Not Found"]);

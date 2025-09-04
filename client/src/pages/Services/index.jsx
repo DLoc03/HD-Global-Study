@@ -9,7 +9,7 @@ import GuestReviews from "@/components/ui/GuestReviews";
 function Service() {
   return (
     <div className="flex w-full flex-col items-center gap-4">
-      <h1 className="text-primary text-center text-4xl font-bold">
+      <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
         HD GLOBAL STUDY luôn hỗ trợ bạn
       </h1>
       <p className="max-w-5xl text-center">

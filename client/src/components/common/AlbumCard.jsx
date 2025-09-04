@@ -1,5 +1,5 @@
 import { useCommonNavigate } from "@/contexts/HandleNavigate";
-import React, { useState } from "react";
+import React from "react";
 import CommonButton from "./CommonButton";
 import { PATHS } from "@/constants";
 

@@ -29,7 +29,7 @@ function BlogContent() {
         Ngày đăng: {convertDateTime(blog?.created_at)}
       </p>
       <div className="mx-auto flex max-w-5xl flex-col gap-4">
-        <h1 className="text-primary text-center text-4xl font-bold">
+        <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
           {blog?.title}
         </h1>
         <p className="text-md text-center font-light">{blog?.description}</p>

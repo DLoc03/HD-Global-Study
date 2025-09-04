@@ -46,7 +46,7 @@ function AlbumDetail() {
     <div className="flex w-full flex-col items-center gap-4">
       {loading && <SpinningLoading />}
 
-      <h1 className="text-primary text-center text-4xl font-bold">
+      <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
         Album {album?.name}
       </h1>
       <p className="text-md max-w-5xl px-4 font-light md:px-0">

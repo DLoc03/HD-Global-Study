@@ -14,6 +14,11 @@ import CommonTextAutoSize from "./CommonTextAutoSize";
 import CommonButton from "./CommonButton";
 import CommonAlert from "./CommonAlert";
 
+import { useEmail } from "@/hooks/useEmail";
+import SpinningLoading from "./SpinningLoading";
+import CommonFadeContainer from "./CommonFadeContainer";
+import CommonFade from "./CommonFade";
+
 const validateForm = (formData, requiredFields = []) => {
   const errors = {};
   requiredFields.forEach((field) => {
@@ -38,6 +43,8 @@ function ContactForm() {
     message: "",
   });
 
+  const { sendEmail, loading } = useEmail();
+
   const [errors, setErrors] = useState({});
   const [alert, setAlert] = useState(null);
 
@@ -48,24 +55,30 @@ function ContactForm() {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const errs = validateForm(formData, ["name", "email", "service"]);
     setErrors(errs);
 
     if (Object.keys(errs).length > 0) {
-      setAlert({
-        type: "error",
-        message: "Vui lòng điền đầy đủ thông tin.",
-      });
+      setAlert({ type: "error", message: "Vui lòng điền đầy đủ thông tin." });
       return;
     }
 
+    const res = await sendEmail(formData);
+
     setAlert({
-      type: "success",
-      message: "Gửi thành công!",
+      type: res.success ? "success" : "error",
+      message: res.message,
     });
-    console.log("Form now: ", formData);
+    setFormData({
+      email: "",
+      name: "",
+      phone: "",
+      service: "",
+      message: "",
+    });
   };
+
   return (
     <>
       {alert && (
@@ -75,10 +88,11 @@ function ContactForm() {
           onClose={() => setAlert(null)}
         />
       )}
-      <div
+      <CommonFadeContainer
+        stagger={0.2}
         className={`bg-primary grid w-full grid-cols-2 items-center gap-4 rounded-xl p-4 shadow-md md:p-8`}
       >
-        <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
+        <CommonFade className="col-span-2 flex flex-col gap-4 lg:col-span-1">
           <h1 className="text-center text-2xl font-bold text-white md:text-left md:text-4xl">
             Kết nối với chúng tôi
           </h1>
@@ -107,49 +121,55 @@ function ContactForm() {
               </a>
             </li>
           </ul>
-        </div>
-        <div className="col-span-2 flex h-fit w-full flex-col gap-4 rounded-xl bg-white p-4 md:p-8 lg:col-span-1">
-          <h1 className="text-primary text-center text-4xl font-medium lg:text-left">
-            Giấc mơ Mỹ không còn xa vời
-          </h1>
-          <CommonInput
-            label="Họ và tên"
-            placeholder="Nhập họ và tên"
-            value={formData.name}
-            onChange={(val) => handleChange("name", val)}
-            required
-          />
-          <CommonInput
-            label="Email"
-            placeholder="Email của bạn"
-            value={formData.email}
-            onChange={(val) => handleChange("email", val)}
-          />
-          <CommonInput
-            label="Số điện thoại"
-            placeholder="Nhập số điện thoại"
-            value={formData.phone}
-            onChange={(val) => handleChange("phone", val)}
-          />
-          <CommonSelectInput
-            label="Chọn dịch vụ tư vấn"
-            options={services}
-            value={formData.service.title}
-            onChange={(val) => handleChange("service", val.title)}
-          />
-          <CommonTextAutoSize
-            placeholder="Để lại cho chúng tôi lời nhắn nếu bạn muốn gửi gắm gì đó tại đây nhé"
-            value={formData.message}
-            onChange={(val) => handleChange("message", val)}
-          />
-          <CommonButton
-            className={"bg-primary w-full rounded-full text-white"}
-            onClick={handleSubmit}
-          >
-            Gửi <SlPaperPlane fontSize={"20px"} color="white" />
-          </CommonButton>
-        </div>
-      </div>
+        </CommonFade>
+        {loading ? (
+          <div className="rounded-xl bg-white">
+            <SpinningLoading message="Đang gửi email" />
+          </div>
+        ) : (
+          <CommonFade className="col-span-2 flex h-fit w-full flex-col gap-4 rounded-xl bg-white p-4 md:p-8 lg:col-span-1">
+            <h1 className="text-primary text-center text-4xl font-medium lg:text-left">
+              Giấc mơ Mỹ không còn xa vời
+            </h1>
+            <CommonInput
+              label="Họ và tên"
+              placeholder="Nhập họ và tên"
+              value={formData.name}
+              onChange={(val) => handleChange("name", val)}
+              required
+            />
+            <CommonInput
+              label="Email"
+              placeholder="Email của bạn"
+              value={formData.email}
+              onChange={(val) => handleChange("email", val)}
+            />
+            <CommonInput
+              label="Số điện thoại"
+              placeholder="Nhập số điện thoại"
+              value={formData.phone}
+              onChange={(val) => handleChange("phone", val)}
+            />
+            <CommonSelectInput
+              label="Chọn dịch vụ tư vấn"
+              options={services}
+              value={formData.service.title}
+              onChange={(val) => handleChange("service", val.title)}
+            />
+            <CommonTextAutoSize
+              placeholder="Để lại cho chúng tôi lời nhắn nếu bạn muốn gửi gắm gì đó tại đây nhé"
+              value={formData.message}
+              onChange={(val) => handleChange("message", val)}
+            />
+            <CommonButton
+              className={"bg-primary w-full rounded-full text-white"}
+              onClick={handleSubmit}
+            >
+              Gửi <SlPaperPlane fontSize={"20px"} color="white" />
+            </CommonButton>
+          </CommonFade>
+        )}
+      </CommonFadeContainer>
     </>
   );
 }

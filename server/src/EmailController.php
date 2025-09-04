@@ -11,7 +11,7 @@ class MailController
     public function sendContact(array $data): array
     {
         // --- Validate input ---
-        $requiredFields = ['name', 'email', 'phone', 'service', 'message'];
+        $requiredFields = ['name', 'email', 'phone', 'service'];
         $missingFields = array_filter($requiredFields, fn($field) => empty($data[$field]));
 
         if (!empty($missingFields)) {
@@ -33,12 +33,12 @@ class MailController
         $subject = $data['subject'] ?? "Thông tin đăng ký khóa học AI";
 
         $message = <<<EOD
-Họ tên: {$data['name']}
-Email: {$data['email']}
-Số điện thoại: {$data['phone']}
-Dịch vụ: {$data['service']}
-Lời nhắn: {$data['message']}
-EOD;
+        Họ tên: {$data['name']}
+        Email: {$data['email']}
+        Số điện thoại: {$data['phone']}
+        Dịch vụ: {$data['service']}
+        Lời nhắn: {$data['message']}
+        EOD;
 
         $headers = "From: SuriShop Contact <no-reply@surishops.com>\r\n";
         $headers .= "Reply-To: {$data['email']}\r\n";

@@ -14,7 +14,9 @@ function Blog() {
 
   return (
     <div className="flex w-full flex-col items-center gap-4">
-      <h1 className="text-primary text-center text-4xl font-bold">Blogs</h1>
+      <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
+        Blogs
+      </h1>
       <p className="text-md text-center">
         Khám phá hành trình du học qua những bài viết hữu ích, được tổng hợp và
         phân tích bởi{" "}
