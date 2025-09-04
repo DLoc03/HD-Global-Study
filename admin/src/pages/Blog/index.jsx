@@ -42,7 +42,7 @@ function Blog() {
     };
 
     fetchPosts();
-  }, [get, reload, order, location.pathname, currentPage, search]);
+  }, [get, reload, order, location.pathname, currentPage]);
 
   const handleDelete = async (id) => {
     try {
@@ -74,11 +74,7 @@ function Blog() {
 
   const handleRefresh = () => {
     setSearch("");
-    setConfig((prev) => ({
-      ...prev,
-      name: null,
-      page: 1,
-    }));
+    setCurrentPage(1);
     setReload((prev) => !prev);
   };
 
@@ -116,21 +112,34 @@ function Blog() {
       </div>
       <div className="flex w-full justify-between">
         <div className="flex gap-2">
-          <CommonInput
-            label=""
-            value={search}
-            onChange={(val) => setSearch(val)}
-            placeholder="Tìm bài viết"
-            className="w-md"
-          />
+          <div className="flex gap-2">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setCurrentPage(1);
+                setReload((prev) => !prev);
+              }}
+              className="flex gap-2"
+            >
+              <CommonInput
+                label=""
+                value={search}
+                onChange={(val) => setSearch(val)}
+                placeholder="Tìm bài viết"
+                className="w-md"
+              />
+              <CommonButton
+                type="submit"
+                className={"bg-primary w-[60px] rounded-xl text-white"}
+              >
+                <FaSearch />
+              </CommonButton>
+            </form>
+          </div>
           <CommonButton
-            className={"bg-primary w-[60px] rounded-xl text-white"}
-            onClick={() => setReload((prev) => !prev)}
-          >
-            <FaSearch />
-          </CommonButton>
-          <CommonButton
-            className={"border-primary text-primary w-full rounded-xl border"}
+            className={
+              "border-primary text-primary w-full rounded-xl border px-4"
+            }
             onClick={handleRefresh}
           >
             <IoIosRefresh />

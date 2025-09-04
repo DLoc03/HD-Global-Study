@@ -59,11 +59,11 @@ function BlogTable({ blogs, onDelete, onHide }) {
       <table className="w-full border-collapse">
         <thead className="border-b-1 border-gray-200 pb-2">
           <tr>
-            <th className="w-1/6 text-left">Bài viết</th>
-            <th className="w-1/3 text-left">Tiêu đề</th>
-            <th className="w-1/6 text-left">Danh mục</th>
+            <th className="w-1/8 text-left">Bài viết</th>
+            <th className="w-1/2 text-left">Tiêu đề</th>
+            <th className="w-1/10 text-left">Danh mục</th>
             <th className="w-1/6 text-left">Ngày đăng</th>
-            <th className="w-1/2 text-left">Trạng thái hiển thị</th>
+            <th className="w-1/6 text-left">Trạng thái</th>
             <th className="w-1/6 text-left"></th>
           </tr>
         </thead>

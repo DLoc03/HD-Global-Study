@@ -48,7 +48,7 @@ function Gallery() {
       }
     };
     fetchAlbums();
-  }, [get, reload, location.pathname, currentPage, search]);
+  }, [get, reload, location.pathname, currentPage]);
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -114,21 +114,32 @@ function Gallery() {
           </h1>
 
           <div className="flex gap-2">
-            <CommonInput
-              label=""
-              value={search}
-              onChange={(val) => setSearch(val)}
-              placeholder="Tìm album"
-              className="w-md"
-            />
-            <CommonButton
-              className={"bg-primary w-[60px] rounded-xl text-white"}
-              onClick={() => setReload((prev) => !prev)}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setCurrentPage(1);
+                setReload((prev) => !prev);
+              }}
+              className="flex gap-2"
             >
-              <FaSearch />
-            </CommonButton>
+              <CommonInput
+                label=""
+                value={search}
+                onChange={(val) => setSearch(val)}
+                placeholder="Tìm bài viết"
+                className="w-md"
+              />
+              <CommonButton
+                type="submit"
+                className={"bg-primary w-[60px] rounded-xl text-white"}
+              >
+                <FaSearch />
+              </CommonButton>
+            </form>
             <CommonButton
-              className={"border-primary text-primary w-full rounded-xl border"}
+              className={
+                "border-primary text-primary w-full rounded-xl border px-4"
+              }
               onClick={handleRefresh}
             >
               <IoIosRefresh />
