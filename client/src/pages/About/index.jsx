@@ -9,11 +9,11 @@ function About() {
   return (
     <CommonFadeContainer
       stagger={0.2}
-      className="mx-auto flex w-full max-w-5xl flex-col items-center gap-4"
+      className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8"
     >
       <CommonFade>
         <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
-          Về HD GLOBAL STUDY
+          Về HD Global Study
         </h1>
       </CommonFade>
 
@@ -30,22 +30,24 @@ function About() {
 
       <CommonFade>
         <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
-          Câu chuyện của chúng tôi
+          Câu chuyện của HD Global Study
         </h1>
       </CommonFade>
 
       {ceos.map((ceo, idx) => (
         <CommonFade key={ceo.key} className="w-full">
           <div
-            className={`flex flex-col ${idx % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"} gap-4`}
+            className={`flex flex-col ${idx % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"} gap-4 ${
+              idx % 2 !== 0 ? "mt-8" : ""
+            }`}
           >
             <img
               src={IMAGE_MAP[ceo.key]}
               alt={ceo.name}
-              className="h-[120px] w-[120px] rounded-md object-cover lg:h-[200px] lg:w-[200px]"
+              className="aspect-square w-full items-center rounded-full object-cover lg:h-[200px] lg:w-[200px]"
             />
             <div
-              className={`flex flex-col ${idx % 2 === 0 ? "text-left" : "text-right"} gap-2`}
+              className={`flex flex-col ${idx % 2 === 0 ? "text-left" : "lg:text-right"} gap-2`}
             >
               <h1 className="text-primary text-lg font-bold">{ceo.title}</h1>
               <p className="text-md">{ceo.subtitle}</p>

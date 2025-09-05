@@ -8,6 +8,7 @@ import AlbumDetail from "@/pages/Gallery/_id";
 
 import Home from "@/pages/Home";
 import Service from "@/pages/Services";
+import ServiceDetail from "@/pages/Services/_id";
 
 const routes = [
   {
@@ -21,6 +22,10 @@ const routes = [
   {
     path: PATHS.SERVICE,
     page: Service,
+  },
+  {
+    path: PATHS.SERVICE_DETAIL,
+    page: ServiceDetail,
   },
   {
     path: PATHS.ADVANTAGE,

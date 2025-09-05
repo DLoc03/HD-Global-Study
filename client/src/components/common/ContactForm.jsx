@@ -94,7 +94,7 @@ function ContactForm() {
       >
         <CommonFade className="col-span-2 flex flex-col gap-4 lg:col-span-1">
           <h1 className="text-center text-2xl font-bold text-white md:text-left md:text-4xl">
-            Kết nối với chúng tôi
+            Kết nối với HD Global Study
           </h1>
           <p className="text-md max-w-lg text-center text-white lg:text-left">
             Đồng hành từ bước chuẩn bị đến khi bạn an tâm học tập & sinh sống
@@ -157,7 +157,7 @@ function ContactForm() {
               onChange={(val) => handleChange("service", val.title)}
             />
             <CommonTextAutoSize
-              placeholder="Để lại cho chúng tôi lời nhắn nếu bạn muốn gửi gắm gì đó tại đây nhé"
+              placeholder="Để lại cho HD Global Study lời nhắn nếu bạn muốn gửi gắm gì đó tại đây nhé"
               value={formData.message}
               onChange={(val) => handleChange("message", val)}
             />

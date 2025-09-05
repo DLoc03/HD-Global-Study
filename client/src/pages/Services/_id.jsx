@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { convertDateTime } from "@/utils";
 import { usePosts } from "@/hooks/usePost";
 
-function BlogContent() {
+function ServiceDetail() {
   const { slug } = useParams();
   const [blog, setBlog] = useState(null);
   const { getBySlug, loading, error } = usePosts();
@@ -42,4 +42,4 @@ function BlogContent() {
   );
 }
 
-export default BlogContent;
+export default ServiceDetail;

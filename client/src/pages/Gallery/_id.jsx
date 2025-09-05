@@ -7,6 +7,8 @@ import ImageOverview from "@/components/common/ImageOverview";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import Pagination from "@/components/common/Pagination";
+import CommonFadeContainer from "@/components/common/CommonFadeContainer";
+import CommonFade from "@/components/common/CommonFade";
 
 function AlbumDetail() {
   const { id } = useParams();
@@ -43,17 +45,21 @@ function AlbumDetail() {
   }, [id, page, getByAlbum]);
 
   return (
-    <div className="flex w-full flex-col items-center gap-4">
+    <CommonFadeContainer className="flex w-full flex-col items-center gap-4">
       {loading && <SpinningLoading />}
 
-      <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
-        Album {album?.name}
-      </h1>
-      <p className="text-md max-w-5xl px-4 font-light md:px-0">
-        {album?.description}
-      </p>
+      <CommonFade>
+        <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
+          Album {album?.name}
+        </h1>
+      </CommonFade>
+      <CommonFade>
+        <p className="text-md max-w-5xl px-4 font-light md:px-0">
+          {album?.description}
+        </p>
+      </CommonFade>
 
-      <div className="grid w-full grid-cols-4 gap-8">
+      <CommonFade className="grid w-full grid-cols-4 gap-8">
         {imageList?.map((image) => (
           <img
             src={image.image_data}
@@ -63,13 +69,15 @@ function AlbumDetail() {
             onClick={() => setSelectedImage(image)}
           />
         ))}
-      </div>
+      </CommonFade>
 
-      <Pagination
-        currentPage={page}
-        totalPage={totalPage}
-        onPageChange={(p) => setPage(p)}
-      />
+      <CommonFade>
+        <Pagination
+          currentPage={page}
+          totalPage={totalPage}
+          onPageChange={(p) => setPage(p)}
+        />
+      </CommonFade>
 
       {selectedImage && (
         <ImageOverview
@@ -78,7 +86,7 @@ function AlbumDetail() {
           onClose={() => setSelectedImage(null)}
         />
       )}
-    </div>
+    </CommonFadeContainer>
   );
 }
 

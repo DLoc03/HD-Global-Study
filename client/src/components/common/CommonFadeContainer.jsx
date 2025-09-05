@@ -24,7 +24,7 @@ const CommonFadeContainer = ({ children, stagger = 0.3, className = "" }) => {
       className={className}
       variants={containerVariants}
       initial="hidden"
-      whileInView="visible"
+      animate="visible"
       viewport={{ once: false }}
     >
       {childrenWithVariants}

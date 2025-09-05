@@ -165,14 +165,16 @@ export default function RichTextEditor({ initialValue = "", onChange }) {
                 </h3>
                 <div className="my-8 grid grid-cols-3 gap-2">
                   {loading ? (
-                    <SpinningLoading />
+                    <div className="col-span-3">
+                      <SpinningLoading />
+                    </div>
                   ) : albumImages.length > 0 ? (
                     albumImages.map((img) => (
                       <img
                         key={img.id}
                         src={img.image_data}
                         alt={img.name || ""}
-                        className="hover:border-primary cursor-pointer border p-1"
+                        className="hover:border-primary col-span-1 cursor-pointer border p-1"
                         onClick={() => insertImage(img.image_data)}
                       />
                     ))

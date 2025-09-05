@@ -1,38 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CommonInput from "@/components/common/CommonInput";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import CommonButton from "@/components/common/CommonButton";
 import { useApi } from "@/config/api";
-
 import CommonAlert from "@/components/common/CommonAlert";
 import { useCommonNavigate } from "@/contexts/HandleNavigate";
 import { PATHS } from "@/constants";
+import CommonBack from "@/components/common/CommonBack";
+import CategoryPopup from "@/components/ui/CategoryPopup";
 
 export default function CreateBlog() {
-  const { post, loading } = useApi();
+  const { post, get, loading } = useApi();
+  const navigate = useCommonNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     content: "",
     image: null,
+    category_id: "",
   });
 
   const [alert, setAlert] = useState();
-
   const [preview, setPreview] = useState(null);
 
-  const navigate = useCommonNavigate();
+  const [categories, setCategories] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
-  // Handle input changes
+  // Load categories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await get("/category/");
+        if (res?.success) {
+          setCategories(res.items || []);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchCategories();
+  }, [get]);
+
   const handleChange = (field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Handle image selection
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     handleChange("image", file);
@@ -46,10 +59,8 @@ export default function CreateBlog() {
     }
   };
 
-  // Submit form
   const handleSubmit = async () => {
-    const { title, content, description, image } = formData;
-
+    const { title, content, description, image, category_id } = formData;
     if (!title || !content) {
       setAlert({
         type: "warning",
@@ -57,11 +68,16 @@ export default function CreateBlog() {
       });
       return;
     }
+    if (!category_id) {
+      setAlert({ type: "warning", message: "Vui lòng chọn danh mục" });
+      return;
+    }
 
     const submitData = new FormData();
     submitData.append("title", title);
     submitData.append("content", content);
     submitData.append("description", description);
+    submitData.append("category_id", category_id);
     if (image) submitData.append("image", image);
 
     try {
@@ -70,28 +86,18 @@ export default function CreateBlog() {
       });
 
       if (res?.success) {
-        setAlert({
-          type: "success",
-          message: "Đã tạo bài viết mới!",
-        });
-        // Reset form
+        setAlert({ type: "success", message: "Đã tạo bài viết mới!" });
         setTimeout(() => {
-          setFormData({ title: "", content: "", image: null });
+          setFormData({ title: "", content: "", image: null, category_id: "" });
           setPreview(null);
           navigate(PATHS.BLOG);
-        }, [1000]);
+        }, 1000);
       } else {
-        setAlert({
-          type: "error",
-          message: res.message,
-        });
+        setAlert({ type: "error", message: res.message });
       }
     } catch (err) {
       console.error(err);
-      setAlert({
-        type: "error",
-        message: res.message,
-      });
+      setAlert({ type: "error", message: "Có lỗi xảy ra khi lưu" });
     }
   };
 
@@ -104,6 +110,8 @@ export default function CreateBlog() {
           onClose={() => setAlert(null)}
         />
       )}
+
+      <CommonBack />
       <h1 className="text-2xl font-bold">Tạo bài viết mới</h1>
 
       {/* Title */}
@@ -118,11 +126,35 @@ export default function CreateBlog() {
 
       <CommonInput
         label="Tiêu đề phụ"
-        placeholder="Nhập tiêu đề"
+        placeholder="Nhập tiêu đề phụ"
         value={formData.description}
         onChange={(val) => handleChange("description", val)}
-        required
       />
+
+      {/* Category */}
+      <div className="flex items-end gap-2">
+        <div className="flex flex-col">
+          <label className="text-md mb-1 font-medium">Danh mục</label>
+          <select
+            className="rounded-md border bg-white px-3 py-2"
+            value={formData.category_id}
+            onChange={(e) => handleChange("category_id", e.target.value)}
+          >
+            <option value="">Chọn danh mục</option>
+            {categories.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <CommonButton
+          onClick={() => setShowModal(true)}
+          className="bg-primary rounded-md px-3 py-2 text-white"
+        >
+          + Tạo mới
+        </CommonButton>
+      </div>
 
       {/* Image Upload */}
       <div className="flex max-w-md flex-col gap-2">
@@ -139,7 +171,6 @@ export default function CreateBlog() {
           />
         </label>
 
-        {/* Preview */}
         {preview && (
           <div className="mt-2">
             <p className="mb-1 text-sm text-gray-500">Xem trước:</p>
@@ -168,7 +199,6 @@ export default function CreateBlog() {
         onChange={(val) => handleChange("content", val)}
       />
 
-      {/* Submit */}
       <CommonButton
         onClick={handleSubmit}
         className="bg-primary mt-4 w-full rounded-full text-white"
@@ -176,6 +206,16 @@ export default function CreateBlog() {
       >
         {loading ? "Đang lưu..." : "Lưu bài viết"}
       </CommonButton>
+
+      {/* Modal */}
+      <CategoryPopup
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        onCreated={(newCat) => {
+          setCategories((prev) => [...prev, newCat]);
+          handleChange("category_id", newCat.id);
+        }}
+      />
     </div>
   );
 }

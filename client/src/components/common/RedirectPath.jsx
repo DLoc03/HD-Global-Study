@@ -5,7 +5,6 @@ import { IoMdHome } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link, useParams } from "react-router-dom";
 
-import { blogs } from "@/datas/blogs.json";
 import { usePosts } from "@/hooks/usePost";
 import { useAlbums } from "@/hooks/useAlbum";
 

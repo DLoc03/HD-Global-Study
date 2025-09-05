@@ -8,6 +8,7 @@ import { IoIosSettings } from "react-icons/io";
 import { MdOutlineContentPasteOff } from "react-icons/md";
 import { LuAlbum } from "react-icons/lu";
 import { LuImageOff } from "react-icons/lu";
+import { BiSolidCategory } from "react-icons/bi";
 
 import { PATHS } from "@/constants";
 
@@ -17,13 +18,18 @@ export default function Sidebar() {
       <img src="/logo.png" className="mt-4 mb-8 w-[100px] px-3" />
       <nav className="space-y-2">
         <CommonMenu label={"Quản lý nội dung"} icon={FaPen}>
-          <CommonMenu label={"Bài viết"} icon={LuNewspaper} path={PATHS.BLOG} />
+          <CommonMenu label={"Nội dung"} icon={LuNewspaper} path={PATHS.BLOG} />
           <CommonMenu
             label={"Đã ẩn"}
             icon={MdOutlineContentPasteOff}
             path={PATHS.HIDING_BLOG}
           />
         </CommonMenu>
+        <CommonMenu
+          label={"Danh mục"}
+          icon={BiSolidCategory}
+          path={PATHS.CATEGORY}
+        />
         <CommonMenu label={"Thư viện ảnh"} icon={MdInsertPhoto}>
           <CommonMenu
             label={"Danh sách album"}

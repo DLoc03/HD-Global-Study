@@ -1,15 +1,24 @@
-import React from "react";
-import { services } from "@/datas/services.json";
+import React, { useEffect, useState } from "react";
 import useResponsiveItems from "@/contexts/ResponsiveItems";
 import CommonSlider from "../common/CommonSlider";
 import ServiceCard from "../common/ServiceCard";
-import { IMAGE_MAP } from "@/constants";
+import { IMAGE_MAP, PATHS } from "@/constants";
 import CommonFadeContainer from "../common/CommonFadeContainer";
 import CommonFade from "../common/CommonFade";
+import BlogCard from "../common/BlogCard";
+import { usePosts } from "@/hooks/usePost";
+import CommonButton from "../common/CommonButton";
+import { useCommonNavigate } from "@/contexts/HandleNavigate";
 
 function Services() {
   const itemsPerSlide = useResponsiveItems({ base: 2, md: 4, xl: 8 });
+  const [page, setPage] = useState(1);
+  const { posts, loading, error, getAll } = usePosts();
+  const navigate = useCommonNavigate();
 
+  useEffect(() => {
+    getAll(page, 4, "DESC", "published", 2);
+  }, [page, getAll]);
   return (
     <CommonFadeContainer
       stagger={0.3}
@@ -17,7 +26,7 @@ function Services() {
     >
       <CommonFade>
         <h1 className="text-primary text-center text-4xl font-bold">
-          Dịch vụ của chúng tôi
+          Dịch vụ của HD Global Study
         </h1>
       </CommonFade>
 
@@ -31,17 +40,27 @@ function Services() {
       </CommonFade>
 
       <CommonFade>
-        <CommonSlider
-          items={services.map((service) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              avatar={IMAGE_MAP[service.key]}
-            />
+        <CommonFadeContainer
+          stagger={0.2}
+          className="grid w-full grid-cols-4 gap-4"
+        >
+          {posts?.items?.map((blog) => (
+            <div
+              className="col-span-4 md:col-span-2 xl:col-span-1"
+              key={blog.id}
+            >
+              <BlogCard blog={blog} />
+            </div>
           ))}
-          className="max-w-6xl"
-          itemsPerSlide={itemsPerSlide}
-        />
+        </CommonFadeContainer>
+      </CommonFade>
+      <CommonFade>
+        <CommonButton
+          onClick={() => navigate(PATHS.SERVICE)}
+          className={"border-primary w-[200px] rounded-full border"}
+        >
+          Xem thêm
+        </CommonButton>
       </CommonFade>
     </CommonFadeContainer>
   );

@@ -5,6 +5,8 @@ import SpinningLoading from "@/components/common/SpinningLoading";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import Pagination from "@/components/common/Pagination";
+import CommonFadeContainer from "@/components/common/CommonFadeContainer";
+import CommonFade from "@/components/common/CommonFade";
 
 function Gallery() {
   const { albums, total, totalPage, currentPage, loading, getPreview } =
@@ -17,21 +19,25 @@ function Gallery() {
   }, [page, getPreview]);
 
   return (
-    <div className="flex w-full flex-col items-center">
+    <CommonFadeContainer className="flex w-full flex-col items-center">
       {loading && <SpinningLoading />}
 
-      <h1 className="text-primary mb-8 text-center text-3xl font-bold md:text-4xl">
-        Câu chuyện qua những khoảnh khắc
-      </h1>
+      <CommonFade>
+        <h1 className="text-primary mb-8 text-center text-3xl font-bold md:text-4xl">
+          Câu chuyện qua những khoảnh khắc
+        </h1>
+      </CommonFade>
 
-      <p className="text-md mb-8 max-w-5xl text-center font-light">
-        Là nơi lưu giữ và chia sẻ những kỷ niệm, hình ảnh đáng nhớ, từ những
-        chuyến đi, sự kiện đặc biệt đến những khoảnh khắc đời thường nhưng ý
-        nghĩa. Mỗi album như một cuốn nhật ký trực quan, giúp người xem cảm nhận
-        câu chuyện và cảm xúc đằng sau từng bức ảnh.
-      </p>
+      <CommonFade>
+        <p className="text-md mb-8 max-w-5xl text-center font-light">
+          Là nơi lưu giữ và chia sẻ những kỷ niệm, hình ảnh đáng nhớ, từ những
+          chuyến đi, sự kiện đặc biệt đến những khoảnh khắc đời thường nhưng ý
+          nghĩa. Mỗi album như một cuốn nhật ký trực quan, giúp người xem cảm
+          nhận câu chuyện và cảm xúc đằng sau từng bức ảnh.
+        </p>
+      </CommonFade>
 
-      <div className="grid w-full grid-cols-4 gap-8">
+      <CommonFade className="grid w-full grid-cols-4 gap-8">
         {albums.map((album) => (
           <div
             className="col-span-4 md:col-span-2 xl:col-span-1"
@@ -45,15 +51,17 @@ function Gallery() {
             />
           </div>
         ))}
-      </div>
+      </CommonFade>
 
       {/* Pagination */}
-      <Pagination
-        currentPage={page}
-        totalPage={totalPage}
-        onPageChange={(p) => setPage(p)}
-      />
-    </div>
+      <CommonFade>
+        <Pagination
+          currentPage={page}
+          totalPage={totalPage}
+          onPageChange={(p) => setPage(p)}
+        />
+      </CommonFade>
+    </CommonFadeContainer>
   );
 }
 

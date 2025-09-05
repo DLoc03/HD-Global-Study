@@ -77,7 +77,7 @@ function BlogTable({ blogs, onDelete, onHide }) {
                 />
               </td>
               <td>{blog.title}</td>
-              <td>{BLOGTYPE_MAP[blog.type]}</td>
+              <td>{blog.category_name}</td>
               <td>{blog.created_at}</td>
               <td
                 className={

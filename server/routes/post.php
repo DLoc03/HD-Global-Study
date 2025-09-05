@@ -12,13 +12,19 @@ $method = $_SERVER['REQUEST_METHOD'];
 $input = json_decode(file_get_contents('php://input'), true);
 
 switch ("$method $uri") {
-
     case 'GET /':
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10; 
-        echo json_encode($posts->list($page, $limit));
-        break;
+        $page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit  = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+        $order  = $_GET['order'] ?? 'DESC';
 
+        $filters = [
+            'category_id' => $_GET['category_id'] ?? null,
+            'status'      => $_GET['status'] ?? null,
+            'title'       => $_GET['title'] ?? null,
+        ];
+
+        echo json_encode($posts->getList($filters, $page, $limit, $order));
+        break;
     case 'GET /get':
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if ($id <= 0) {
@@ -37,35 +43,6 @@ switch ("$method $uri") {
         echo json_encode($posts->getBySlug($slug));
         break;
 
-    case 'GET /byType':
-        $type = $_GET['type'] ?? '';
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        echo json_encode($posts->getListByType($type, $page, $limit));
-        break;
-
-    case 'GET /byTitle':
-        $title  = $_GET['title'] ?? '';
-        $status = $_GET['status'] ?? '';
-        $page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit  = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        echo json_encode($posts->getListByTitle($title, $status, $page, $limit));
-        break;
-
-
-    case 'GET /byStatus':
-        $status = $_GET['status'] ?? '';
-        $title = $_GET['title'] ?? '';
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        $order = $_GET['order'] ?? 'DESC';
-        
-        $result = $posts->getListByStatus($status, $page, $limit, $order, $title);
-        $result['items'] = $posts->sortByDate($result['items'], $order);
-        echo json_encode($result);
-        break;
-
-
     case 'POST /updateStatus':
         $id = $input['id'] ?? ($_GET['id'] ?? 0);
         $status = $input['status'] ?? ($_GET['status'] ?? '');
@@ -74,12 +51,12 @@ switch ("$method $uri") {
 
     case 'POST /create':
         $input = $_POST;
-        $files = $_FILES; 
+        $files = $_FILES;
         echo json_encode($posts->create($input, $files));
         break;
 
     case 'POST /update':
-        $input = $_POST ?? [];  
+        $input = $_POST ?? [];
         $id = $input['id'] ?? 0;
         echo json_encode($posts->updateWithImage((int)$id, $input, $_FILES));
         break;

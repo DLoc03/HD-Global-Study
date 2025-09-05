@@ -11,6 +11,10 @@ const PATHS = {
   IMAGE_LIST: "/album/:id",
   HIDING_ALBUM: "/album/hide",
   HIDING_IMAGE: "/image/hide",
+  CATEGORY: "/category",
+  HIDING_CATEGORY: "/category/hide",
+  SERVICE: "/service",
+  HIDING_SERVICE: "/service/hide",
 };
 
 const BLOGTYPE_MAP = {

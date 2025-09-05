@@ -7,6 +7,9 @@ $dotenv->load();
 
 $pdo = getPDO();
 
+/**
+ * Seed admin 
+ */
 $username = $_ENV['DEFAULT_ADMIN_USER'];
 $password = $_ENV['DEFAULT_ADMIN_PASS'];
 $hash = password_hash($password, PASSWORD_BCRYPT);
@@ -27,4 +30,24 @@ if ($stmt->fetchColumn() == 0) {
 
 echo "Username: $username\n";
 echo "Password (plain): $password\n";
-echo "Password (hash): $hash\n";
+echo "Password (hash): $hash\n\n";
+
+/**
+ * Seed category
+ */
+$categories = ['Blog', 'Dịch vụ'];
+
+foreach ($categories as $name) {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM category WHERE name = :name");
+    $stmt->execute(['name' => $name]);
+
+    if ($stmt->fetchColumn() == 0) {
+        $insert = $pdo->prepare("INSERT INTO category (name) VALUES (:name)");
+        $insert->execute(['name' => $name]);
+        echo "Category created: $name\n";
+    } else {
+        echo "Category already exists: $name\n";
+    }
+}
+
+echo "\n Seeder chạy xong!\n";

@@ -16,10 +16,15 @@ import profile from "@assets/photos/profile.png";
 import airplane from "@assets/photos/airplane.png";
 import smile from "@assets/photos/smiling-face.png";
 
+import content_1 from "@assets/photos/content_1.jpg";
+import content_2 from "@assets/photos/content_2.jpg";
+import content_3 from "@assets/photos/content_3.jpg";
+
 const PATHS = {
   HOME: "/",
   ABOUT: "/about",
   SERVICE: "/service",
+  SERVICE_DETAIL: "/service/:slug",
   ADVANTAGE: "/why-choose-hd-global-study",
   BLOG: "/blogs",
   BLOG_CONTENT: "/blogs/:slug",
@@ -66,7 +71,7 @@ const BANNER_MAP = [
   {
     name: "banner_5",
     src: banner_5,
-    title: "Kết nối cùng chúng tôi",
+    title: "Kết nối cùng HD Global Study",
   },
 ];
 
@@ -81,6 +86,9 @@ const IMAGE_MAP = {
   airplane,
   smile,
   profile,
+  content_1,
+  content_2,
+  content_3,
 };
 
 const USER_MAP = [

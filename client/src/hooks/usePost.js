@@ -6,11 +6,23 @@ export function usePosts() {
   const [posts, setPosts] = useState({ items: [], total: 0 });
 
   const getAll = useCallback(
-    async (page = 1, limit = 10, status = "published") => {
+    async (
+      page = 1,
+      limit = 6,
+      order = "DESC",
+      status = "published",
+      category_id = 1,
+    ) => {
       try {
-        const data = await get(
-          `/post/byStatus?status=${status}&page=${page}&limit=${limit}&order=DESC`,
-        );
+        const data = await get("/post/", {
+          params: {
+            page,
+            limit,
+            order,
+            status,
+            category_id,
+          },
+        });
         setPosts(data);
       } catch (err) {
         console.error(err);

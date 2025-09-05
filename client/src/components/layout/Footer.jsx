@@ -11,7 +11,7 @@ import { FaFacebook } from "react-icons/fa";
 
 const menus = [
   {
-    heading: "Về chúng tôi",
+    heading: "Về HD Global Study",
     menu: [
       {
         path: PATHS.ABOUT,
@@ -28,7 +28,7 @@ const menus = [
     ],
   },
   {
-    heading: "Dịch vụ của chúng tôi",
+    heading: "Dịch vụ của HD Global Study",
     menu: [
       {
         path: PATHS.SERVICE,
@@ -36,7 +36,7 @@ const menus = [
       },
       {
         path: PATHS.ADVANTAGE,
-        name: "Tại sao chọn chúng tôi",
+        name: "Tại sao chọn HD Global Study",
       },
     ],
   },
@@ -48,7 +48,7 @@ function Footer() {
       <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between py-12 lg:flex-row lg:items-start">
         <div className="flex flex-col items-center space-y-2 lg:items-start">
           <h1 className="text-primary mb-4 text-2xl font-semibold">
-            HD GLobal Study
+            HD Global Study
           </h1>
           <ul className="flex flex-col items-center space-y-2 lg:items-start">
             <li>

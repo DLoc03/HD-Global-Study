@@ -1,18 +1,16 @@
+import React, { useEffect, useState } from "react";
 import CommonButton from "@/components/common/CommonButton";
 import SpinningLoading from "@/components/common/SpinningLoading";
 import BlogTable from "@/components/ui/BlogTable";
 import { useApi } from "@/config/api";
 import { PATHS } from "@/constants";
 import { useCommonNavigate } from "@/contexts/HandleNavigate";
-import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-
-import CommonAlert from "@/components/common/CommonAlert";
-
 import { FaRegPlusSquare } from "react-icons/fa";
-import CommonInput from "@/components/common/CommonInput";
-import { useLocation } from "react-router-dom";
 import { IoIosRefresh } from "react-icons/io";
+import { useLocation } from "react-router-dom";
+import CommonAlert from "@/components/common/CommonAlert";
+import CommonInput from "@/components/common/CommonInput";
 import Pagination from "@/components/common/Pagination";
 
 function Blog() {
@@ -21,7 +19,9 @@ function Blog() {
   const [reload, setReload] = useState(false);
   const [alert, setAlert] = useState();
   const [order, setOrder] = useState("DESC");
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -30,19 +30,43 @@ function Blog() {
   const navigate = useCommonNavigate();
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await get("/category/");
+      if (res?.success) {
+        setCategories(res.items || []);
+      }
+    };
+    fetchCategories();
+  }, [get]);
+
+  useEffect(() => {
     const fetchPosts = async () => {
       const status = location.pathname === PATHS.BLOG ? "published" : "draft";
-      const res = await get("/post/byStatus", {
-        params: { page: currentPage, limit, order, status, title: search },
+
+      const res = await get("/post/", {
+        params: {
+          page: currentPage,
+          limit,
+          order,
+          status,
+          title: search || "",
+          category_id: selectedCategory || "",
+        },
       });
 
-      setBlogs(res || []);
-      setCurrentPage(res.currentPage || 1);
-      setTotalPage(res.totalPage || 1);
+      if (res) {
+        setBlogs(res);
+        setCurrentPage(res.currentPage || 1);
+        setTotalPage(res.totalPage || 1);
+      } else {
+        setBlogs([]);
+        setCurrentPage(1);
+        setTotalPage(1);
+      }
     };
 
     fetchPosts();
-  }, [get, reload, order, location.pathname, currentPage]);
+  }, [get, reload, order, location.pathname, currentPage, selectedCategory]);
 
   const handleDelete = async (id) => {
     try {
@@ -53,7 +77,7 @@ function Blog() {
       } else {
         setAlert({ type: "error", message: res.message });
       }
-    } catch (err) {
+    } catch {
       setAlert({ type: "error", message: "Xảy ra lỗi" });
     }
   };
@@ -74,6 +98,7 @@ function Blog() {
 
   const handleRefresh = () => {
     setSearch("");
+    setSelectedCategory("");
     setCurrentPage(1);
     setReload((prev) => !prev);
   };
@@ -100,9 +125,7 @@ function Blog() {
         </h1>
         {location.pathname === "/" && (
           <CommonButton
-            className={
-              "bg-primary hover:bg-light rounded-full px-4 text-sm text-white"
-            }
+            className="bg-primary hover:bg-light rounded-full px-4 text-sm text-white"
             onClick={() => navigate(PATHS.CREATE_BLOG)}
           >
             <FaRegPlusSquare />
@@ -110,42 +133,60 @@ function Blog() {
           </CommonButton>
         )}
       </div>
+
       <div className="flex w-full justify-between">
         <div className="flex gap-2">
-          <div className="flex gap-2">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setCurrentPage(1);
-                setReload((prev) => !prev);
-              }}
-              className="flex gap-2"
+          {/* Search */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setCurrentPage(1);
+              setReload((prev) => !prev);
+            }}
+            className="flex gap-2"
+          >
+            <CommonInput
+              label=""
+              value={search}
+              onChange={(val) => setSearch(val)}
+              placeholder="Tìm bài viết"
+              className="w-md"
+            />
+            <CommonButton
+              type="submit"
+              className="bg-primary w-[60px] rounded-xl text-white"
             >
-              <CommonInput
-                label=""
-                value={search}
-                onChange={(val) => setSearch(val)}
-                placeholder="Tìm bài viết"
-                className="w-md"
-              />
-              <CommonButton
-                type="submit"
-                className={"bg-primary w-[60px] rounded-xl text-white"}
-              >
-                <FaSearch />
-              </CommonButton>
-            </form>
-          </div>
+              <FaSearch />
+            </CommonButton>
+          </form>
+
+          {/* Category filter */}
+          <select
+            value={selectedCategory}
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="rounded-md border border-gray-300 p-2 text-sm"
+          >
+            <option value="">Tất cả danh mục</option>
+            {categories.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+
+          {/* Refresh */}
           <CommonButton
-            className={
-              "border-primary text-primary w-full rounded-xl border px-4"
-            }
+            className="border-primary text-primary w-full rounded-xl border px-4"
             onClick={handleRefresh}
           >
             <IoIosRefresh />
             Làm mới danh sách
           </CommonButton>
         </div>
+
         <div className="flex items-center gap-2">
           <label className="text-sm text-gray-600">Sắp xếp:</label>
           <select
@@ -161,7 +202,7 @@ function Blog() {
 
       {blogs.totalItem === 0 ? (
         <h1 className="mt-8 text-center text-sm text-gray-500">
-          {search
+          {search || selectedCategory
             ? "Không tìm thấy bài viết nào"
             : "Hiện không có bài viết nào"}
         </h1>
@@ -171,7 +212,7 @@ function Blog() {
             blogs={blogs}
             onDelete={handleDelete}
             onHide={handleUpdateStatus}
-            isShowHide={location.pathname === PATHS.BLOG ? true : false}
+            isShowHide={location.pathname === PATHS.BLOG}
           />
         </div>
       )}

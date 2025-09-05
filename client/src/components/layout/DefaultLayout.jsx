@@ -20,7 +20,7 @@ function DefaultLayout({ children }) {
     <>
       <Header />
       {location.pathname !== PATHS.HOME && (
-        <div className="mt-18 mb-4 md:mt-28">
+        <div className="mt-26 mb-4 md:mt-28">
           <RedirectPath path={currentMenu} />
         </div>
       )}
