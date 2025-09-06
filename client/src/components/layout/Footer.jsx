@@ -18,10 +18,6 @@ const menus = [
         name: "Giới thiệu",
       },
       {
-        path: PATHS.REAL_STORY,
-        name: "Cuộc sống ở Mỹ",
-      },
-      {
         path: PATHS.GALLERY,
         name: "Thư viện",
       },
