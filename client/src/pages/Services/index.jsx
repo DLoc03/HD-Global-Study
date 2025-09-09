@@ -26,14 +26,16 @@ function Service() {
       {loading && <SpinningLoading />}
       <CommonFade>
         <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
-          HD Global Study luôn hỗ trợ bạn
+          HD Global Study – Luôn đồng hành cùng bạn
         </h1>
       </CommonFade>
       <CommonFade>
         <p className="max-w-5xl text-center">
-          Mỗi thành công của học sinh chính là động lực và niềm tự hào để HD
-          Global Study tiếp tục đồng hành, chắp cánh giấc mơ Mỹ cho các bạn trẻ
-          Việt Nam.
+          Mỗi bước tiến, mỗi thành công của học sinh không chỉ là niềm vui, mà
+          còn là động lực để HD Global Study tiếp tục sứ mệnh luôn đồng hành
+          chắp cánh ước mơ Mỹ. Chúng tôi tin rằng, với tri thức và sự hội nhập,
+          thế hệ trẻ Việt Nam sẽ vươn xa, tự tin khẳng định mình trên hành trình
+          chinh phục thế giới.
         </p>
       </CommonFade>
       <CommonFadeContainer

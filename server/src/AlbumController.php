@@ -161,7 +161,7 @@ class AlbumsController {
 
     public function create(array $data): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lại'];
 
         $name = trim($data['name'] ?? '');
         if (!$name) return ['success' => false, 'message' => 'Tên album không được để trống'];
@@ -183,7 +183,7 @@ class AlbumsController {
 
     public function update(int $id, array $data): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lại'];
 
         $stmt = $this->pdo->prepare("UPDATE albums SET name=:name, updated_at=NOW() WHERE id=:id");
         $stmt->execute([
@@ -196,7 +196,7 @@ class AlbumsController {
 
     public function delete(int $id): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lại'];
 
         $stmt = $this->pdo->prepare("DELETE FROM albums WHERE id=:id");
         $stmt->execute(['id' => $id]);
@@ -206,7 +206,7 @@ class AlbumsController {
 
     public function updateStatus(int $id, string $status): array {
         $admin = $this->auth->getAdminFromToken();
-        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid'];
+        if (!$admin) return ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lại'];
 
         $stmt = $this->pdo->prepare("UPDATE albums SET status=:status, updated_at=NOW() WHERE id=:id");
         $stmt->execute([

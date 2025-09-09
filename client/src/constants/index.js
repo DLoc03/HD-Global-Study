@@ -101,7 +101,7 @@ const USER_MAP = [
   {
     name: "nam_truong",
     src: nam_truong,
-    title: "Hành trình du học Mỹ của NAM TRƯƠNG",
+    title: "Hành trình du học Mỹ của TRƯƠNG VIẾT NAM",
     subtitle: "Liberty Christian School  in Huntington Beach, California.",
   },
 ];

@@ -17,7 +17,7 @@ function ReviewCard({ user, avatar }) {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <h1 className="text-md line-clamp-2 font-medium">
+        <h1 className="text-md line-clamp-2 min-h-[48px] font-medium">
           {user.review_title}
         </h1>
         <h1 className="text-sm">{user.review_text}</h1>

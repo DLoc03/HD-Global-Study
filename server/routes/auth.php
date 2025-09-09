@@ -35,7 +35,7 @@ switch ("$method $uri") {
         if ($admin) {
             echo json_encode(['success' => true, 'admin_id' => $admin['admin_id'], 'username' => $admin['username']]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lạid']);
+            echo json_encode(['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lại']);
         }
         break;
 

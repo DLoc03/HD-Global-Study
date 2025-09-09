@@ -49,7 +49,7 @@ function RedirectPath({ path }) {
       </Link>
       <IoIosArrowForward />
       <Link to={path.path}>
-        <p className="font-bold">{path?.name}</p>
+        <p className="line-clamp-1 font-bold">{path?.name}</p>
       </Link>
       {slug && (
         <div className="flex items-center gap-4">

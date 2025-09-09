@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 export default function CommonInput({
   type = "text",
@@ -10,6 +11,7 @@ export default function CommonInput({
   required = false,
 }) {
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const formatNumber = (val) => {
     if (!val) return "";
@@ -25,17 +27,10 @@ export default function CommonInput({
     } else {
       onChange && onChange(val);
     }
-
-    if (error) setError("");
   };
 
   const handleBlur = (e) => {
-    const val = e.target.value.trim();
-
-    if (required && !val) {
-      setError("Trường này không được để trống");
-      return;
-    }
+    const val = e.target.value;
 
     if (type === "email") {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,16 +45,28 @@ export default function CommonInput({
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
       {label && <p className="text-md">{label}</p>}
-      <input
-        type={type === "number" ? "text" : type}
-        value={type === "number" ? formatNumber(value.toString()) : value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder={placeholder}
-        className={`rounded-lg border ${
-          error ? "border-red-500" : "border-gray-400"
-        } bg-white px-3 py-3 placeholder:text-sm`}
-      />
+      <div className="relative">
+        <input
+          type={
+            type === "password" ? (showPassword ? "text" : "password") : "text"
+          }
+          value={type === "number" ? formatNumber(value.toString()) : value}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder={placeholder}
+          className="w-full rounded-lg border border-gray-400 bg-white px-3 py-3 pr-10 placeholder:text-sm"
+          required={required}
+        />
+        {type === "password" && (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute top-1/2 right-3 -translate-y-1/2 text-xl text-gray-600 focus:outline-none"
+          >
+            {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+          </button>
+        )}
+      </div>
       {error && <span className="mt-1 text-sm text-red-500">{error}</span>}
     </div>
   );
