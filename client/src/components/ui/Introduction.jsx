@@ -25,10 +25,10 @@ function Introduction() {
         <div className="text-md col-span-2 text-justify font-light">
           "<span className="text-primary font-bold">HD Global Study</span> ra
           đời với sứ mệnh đồng hành cùng thế hệ trẻ Việt Nam trên hành trình du
-          học và định cư quốc tế. HD Global Study không chỉ mang đến giải pháp
-          học tập và cơ hội toàn cầu, mà còn là người bạn tin cậy, cùng học sinh
-          – sinh viên và gia đình chắp cánh cho những ước mơ vươn xa, chinh phục
-          tri thức và tương lai tươi sáng."
+          học và sinh sống tại Mỹ. Không chỉ mang đến những giải pháp học tập
+          toàn diện, HD Global Study còn là người bạn tin cậy của học sinh –
+          sinh viên và gia đình, cùng nhau chắp cánh ước mơ chinh phục tri thức
+          và hòa nhập trong môi trường đa văn hóa."
         </div>
         <div className="col-span-2">
           <CommonSlider
