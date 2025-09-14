@@ -25,7 +25,7 @@ const PATHS = {
   ABOUT: "/about",
   SERVICE: "/service",
   SERVICE_DETAIL: "/service/:slug",
-  ADVANTAGE: "/why-choose-hd-global-study",
+  ADVANTAGE: "/why-choose-hd-global-Studies",
   BLOG: "/blogs",
   BLOG_CONTENT: "/blogs/:slug",
   GALLERY: "/gallery",
@@ -40,7 +40,7 @@ const CONTACT = {
   VIETNAME_ADDRESS: "https://maps.app.goo.gl/LGyXVvRVcHbLJRUg6",
   PHONE_1: "tel:+17028208711",
   PHONE_2: "tel:+84908064656",
-  FACEBOOK: "https://www.facebook.com/people/HD-GLobal-Study/61579047725784/",
+  FACEBOOK: "https://www.facebook.com/people/HD-GLobal-Studies/61579047725784/",
 };
 
 const BANNER_MAP = [
@@ -71,7 +71,7 @@ const BANNER_MAP = [
   {
     name: "banner_5",
     src: banner_5,
-    title: "Kết nối cùng HD Global Study",
+    title: "Kết nối cùng HD Global Studies",
   },
 ];
 
@@ -121,7 +121,7 @@ const MENU_MAP = [
   },
   {
     path: PATHS.ADVANTAGE,
-    name: "Tại sao chọn HD Global Study",
+    name: "Tại sao chọn HD Global Studies",
   },
   {
     path: PATHS.BLOG,

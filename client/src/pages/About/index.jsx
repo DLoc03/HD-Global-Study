@@ -13,25 +13,25 @@ function About() {
     >
       <CommonFade>
         <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
-          Về HD Global Study
+          Về HD Global Studies
         </h1>
       </CommonFade>
 
       <CommonFade>
         <p className="text-md max-w-5xl text-center font-light">
           Là đơn vị chuyên tư vấn du học và định hướng cuộc sống tại Mỹ, HD
-          Global Study luôn đồng hành cùng học sinh, sinh viên và gia đình Việt
-          Nam trên hành trình vươn ra thế giới, chinh phục tri thức và hội nhập
-          trong môi trường đa văn hóa. Với đội ngũ chuyên gia giàu kiến thức và
-          kinh nghiệm, chúng tôi không chỉ giúp bạn hiện thực hóa giấc mơ vào
-          những ngôi trường mong ước, mà còn tự tin hòa nhập và gặt hái thành
-          công tại Mỹ.
+          Global Studies luôn đồng hành cùng học sinh, sinh viên và gia đình
+          Việt Nam trên hành trình vươn ra thế giới, chinh phục tri thức và hội
+          nhập trong môi trường đa văn hóa. Với đội ngũ chuyên gia giàu kiến
+          thức và kinh nghiệm, chúng tôi không chỉ giúp bạn hiện thực hóa giấc
+          mơ vào những ngôi trường mong ước, mà còn tự tin hòa nhập và gặt hái
+          thành công tại Mỹ.
         </p>
       </CommonFade>
 
       <CommonFade>
         <h1 className="text-primary text-center text-3xl font-bold md:text-4xl">
-          Câu chuyện của HD Global Study
+          Câu chuyện của HD Global Studies
         </h1>
       </CommonFade>
 

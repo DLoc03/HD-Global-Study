@@ -9,7 +9,7 @@ function Advantage() {
     <CommonFadeContainer className="mx-auto max-w-7xl px-4">
       <CommonFade>
         <h1 className="text-primary mb-12 text-center text-3xl font-bold md:text-4xl">
-          Tại sao bạn nên chọn HD Global Study
+          Tại sao bạn nên chọn HD Global Studies
         </h1>
       </CommonFade>
 

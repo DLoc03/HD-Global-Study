@@ -17,7 +17,7 @@ function Overview() {
     >
       <CommonFade>
         <h1 className="text-primary text-center text-4xl font-bold md:text-6xl">
-          HD Global Study
+          HD Global Studies
         </h1>
       </CommonFade>
 

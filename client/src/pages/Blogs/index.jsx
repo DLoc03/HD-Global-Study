@@ -26,7 +26,7 @@ function Blog() {
         <p className="text-md text-center lg:text-left">
           Khám phá hành trình du học qua những bài viết hữu ích, được tổng hợp
           và phân tích bởi{" "}
-          <span className="text-primary font-bold">HD Global Study</span>.
+          <span className="text-primary font-bold">HD Global Studies</span>.
         </p>
 
         <div className="mt-2 grid w-full grid-cols-3 gap-8">

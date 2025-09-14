@@ -1,4 +1,4 @@
-Configuration to run the HD GLOBAL STUDY project:
+Configuration to run the HD GLOBAL Studies project:
 
 Client/Admin (ReactJS):
 npm install

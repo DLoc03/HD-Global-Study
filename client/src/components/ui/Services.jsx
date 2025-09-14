@@ -26,16 +26,16 @@ function Services() {
     >
       <CommonFade>
         <h1 className="text-primary text-center text-4xl font-bold">
-          Dịch vụ của HD Global Study
+          Dịch vụ của HD Global Studies
         </h1>
       </CommonFade>
 
       <CommonFade>
         <h2 className="text-md max-w-5xl text-center font-light">
           Với đội ngũ chuyên gia giàu kiến thức và kinh nghiệm,{" "}
-          <span className="text-primary font-bold">HD Global Study</span> không
-          chỉ giúp bạn hiện thực hóa giấc mơ vào các trường mong ước, mà còn tự
-          tin hòa nhập môi trường đa văn hóa và gặt hái thành công
+          <span className="text-primary font-bold">HD Global Studies</span>{" "}
+          không chỉ giúp bạn hiện thực hóa giấc mơ vào các trường mong ước, mà
+          còn tự tin hòa nhập môi trường đa văn hóa và gặt hái thành công
         </h2>
       </CommonFade>
 

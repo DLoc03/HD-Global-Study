@@ -20,13 +20,13 @@ function Introduction() {
     >
       <CommonFade className="col-span-5 grid grid-cols-2 gap-4 lg:col-span-3">
         <div className="text-primary col-span-2 text-center text-4xl font-bold lg:text-left">
-          Câu chuyện của HD Global Study
+          Câu chuyện của HD Global Studies
         </div>
         <div className="text-md col-span-2 text-justify font-light">
-          "<span className="text-primary font-bold">HD Global Study</span> ra
+          "<span className="text-primary font-bold">HD Global Studies</span> ra
           đời với sứ mệnh đồng hành cùng thế hệ trẻ Việt Nam trên hành trình du
           học và sinh sống tại Mỹ. Không chỉ mang đến những giải pháp học tập
-          toàn diện, HD Global Study còn là người bạn tin cậy của học sinh –
+          toàn diện, HD Global Studies còn là người bạn tin cậy của học sinh –
           sinh viên và gia đình, cùng nhau chắp cánh ước mơ chinh phục tri thức
           và hòa nhập trong môi trường đa văn hóa."
         </div>
