@@ -1,6 +1,6 @@
 import React from "react";
 
-import logo from "@assets/main/logo.jpg";
+import logo from "/logo.jpg";
 import { Link } from "react-router-dom";
 import { PATHS } from "@/constants";
 
