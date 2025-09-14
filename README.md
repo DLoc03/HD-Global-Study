@@ -4,7 +4,7 @@ Client/Admin (ReactJS):
 npm install
 npm run dev
 
-Server (PHP):
+Server (PHP) - Running local:
 
 1. composer install.
 2. update your environment variables in .env file.
