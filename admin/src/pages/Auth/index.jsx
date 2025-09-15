@@ -6,6 +6,8 @@ import { PATHS } from "@/constants";
 import { useCommonNavigate } from "@/contexts/HandleNavigate";
 import React, { useState } from "react";
 
+import logo from "@assets/logo.jpg";
+
 function Auth() {
   const [formData, setFormData] = useState({
     username: "",
@@ -56,7 +58,7 @@ function Auth() {
       )}
       <div className="shadow-main flex w-full max-w-md flex-col items-center gap-4 rounded-xl p-4">
         <img
-          src="/logo.jpg"
+          src={logo}
           alt="logo"
           className="h-[60px] w-[60px] rounded-full object-cover"
         />

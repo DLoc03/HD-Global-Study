@@ -4,6 +4,7 @@ import MenuDropdown from "../common/MenuDropdown";
 import { useCommonNavigate } from "@/contexts/HandleNavigate";
 import { PATHS } from "@/constants";
 import { useAuth } from "@/config/api";
+import logo from "@assets/logo.jpg";
 
 export default function Header({ onToggle }) {
   const navigate = useCommonNavigate();
@@ -24,7 +25,7 @@ export default function Header({ onToggle }) {
         </p>
         {/* <IoMdNotificationsOutline fontSize={"28px"} /> */}
         <div className="ml-2 flex items-center gap-2">
-          <img src="/logo.jpg" className="w-8 rounded-full" />
+          <img src={logo} className="w-8 rounded-full" />
           <MenuDropdown
             username={
               <>

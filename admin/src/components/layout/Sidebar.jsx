@@ -12,10 +12,12 @@ import { BiSolidCategory } from "react-icons/bi";
 
 import { PATHS } from "@/constants";
 
+import logo from "@assets/logo.png";
+
 export default function Sidebar() {
   return (
     <div className="h-screen p-4">
-      <img src="/logo.png" className="mt-4 mb-8 w-[100px] px-3" />
+      <img src={logo} className="mt-4 mb-8 w-full px-3" />
       <nav className="space-y-2">
         <CommonMenu label={"Quản lý nội dung"} icon={FaPen}>
           <CommonMenu label={"Nội dung"} icon={LuNewspaper} path={PATHS.BLOG} />
