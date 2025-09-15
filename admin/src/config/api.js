@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 // --- Axios instance ---
 export const api = axios.create({
-  baseURL: "/server/public/",
+  baseURL: "/server",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
@@ -130,7 +130,7 @@ export function useAuth() {
   const logout = useCallback(async () => {
     await api.post("/auth/logout");
     setAdmin(null);
-    navigate("/auth");
+    navigate("/login");
   }, [navigate]);
 
   return { admin, setAdmin, loading, check, login, logout };
