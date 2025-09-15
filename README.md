@@ -13,3 +13,4 @@ Server (PHP) - Running local:
 
 The default admin account can be configured manually in the .env file.
 "MAIL TO" is the guest email.
+JWT SECRET is a string that you can declare anything, for example "hdglobal123..."
