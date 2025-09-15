@@ -16,7 +16,7 @@ function Setting() {
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();
 
-  const { admin, check } = useAuth();
+  const { admin, check, setAdmin } = useAuth();
 
   useEffect(() => {
     check();
@@ -43,12 +43,18 @@ function Setting() {
           type: "success",
           message: res.message,
         });
+
+        if (formType === "username") {
+          setAdmin({ ...admin, username });
+        }
         setTimeout(() => {
           setOpen(false);
         }, [500]);
+
         setUsername(null);
         setNewPassword(null);
         setOldPassword(null);
+        await check();
       } else {
         setAlert({
           type: "error",

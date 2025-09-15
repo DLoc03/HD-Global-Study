@@ -102,12 +102,12 @@ export function useAuth() {
         return true;
       } else {
         setAdmin(null);
-        navigate("/auth");
+        navigate("/login");
         return false;
       }
     } catch (err) {
       setAdmin(null);
-      navigate("/auth");
+      navigate("/login");
       return false;
     } finally {
       setLoading(false);
@@ -130,7 +130,7 @@ export function useAuth() {
   const logout = useCallback(async () => {
     await api.post("/auth/logout");
     setAdmin(null);
-    navigate("/auth");
+    navigate("/login");
   }, [navigate]);
 
   return { admin, setAdmin, loading, check, login, logout };

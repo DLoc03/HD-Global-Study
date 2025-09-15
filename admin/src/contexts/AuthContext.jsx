@@ -1,4 +1,10 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "@/config/api";
 
@@ -9,28 +15,34 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await api.get("/auth/check");
-        if (res.data.success) {
-          setAdmin({ id: res.data.admin_id, username: res.data.username });
-        } else {
-          setAdmin(null);
-          navigate("/login");
-        }
-      } catch {
+  const check = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await api.get("/auth/check");
+      if (res?.data?.success) {
+        setAdmin({ id: res.data.admin_id, username: res.data.username });
+      } else {
         setAdmin(null);
-        navigate("/login");
-      } finally {
-        setLoading(false);
       }
-    };
-    checkAuth();
+    } catch (err) {
+      console.error(err);
+      setAdmin(null);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    check();
+  }, [check]);
+
+  const logout = useCallback(() => {
+    setAdmin(null);
+    navigate("/login");
   }, [navigate]);
 
   return (
-    <AuthContext.Provider value={{ admin, setAdmin, loading }}>
+    <AuthContext.Provider value={{ admin, setAdmin, loading, check, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Menu } from "lucide-react";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import MenuDropdown from "../common/MenuDropdown";
 import { useCommonNavigate } from "@/contexts/HandleNavigate";
 import { PATHS } from "@/constants";
@@ -8,12 +7,12 @@ import { useAuth } from "@/config/api";
 
 export default function Header({ onToggle }) {
   const navigate = useCommonNavigate();
-  const { logout } = useAuth();
-  const { admin, check } = useAuth();
+  const { admin, logout, check } = useAuth();
 
   useEffect(() => {
     check();
   }, [check]);
+
   return (
     <header className="flex items-center justify-between bg-white p-4 shadow">
       <button onClick={onToggle} className="mr-4">
@@ -31,7 +30,7 @@ export default function Header({ onToggle }) {
               <>
                 Xin chào,{" "}
                 <span className="text-primary font-bold">
-                  {admin?.username}
+                  {admin?.username || "..."}
                 </span>
               </>
             }
