@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { useApi } from "@/config/api"; // Hook của bạn
+import { useApi } from "@/config/api";
 
 // Core & theme
 import "tinymce/tinymce";
