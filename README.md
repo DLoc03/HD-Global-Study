@@ -55,9 +55,7 @@ CONFIGURE AND INSTALL THE RUNNING
    VITE_API_FE_URL: Client URL
 ```
 
-```MAIL_TO (Web service email. This is the email that receives service requests from customers visiting the website and sends them to the service provider.)
-
-```
+`MAIL_TO (Web service email. This is the email that receives service requests from customers visiting the website and sends them to the service provider.)`
 
 - Running server first
 
