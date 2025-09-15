@@ -5,8 +5,8 @@ header('Content-Type: application/json');
 $pdo = getPDO();
 $auth = new AuthController($pdo);
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = preg_replace('#^/auth#', '', $uri);
+$uri = preg_replace('#^/auth#', '', $route);
+$uri = rtrim($uri, '/');
 $method = $_SERVER['REQUEST_METHOD'];
 
 $input = json_decode(file_get_contents('php://input'), true);

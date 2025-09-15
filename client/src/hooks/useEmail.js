@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useApi } from ".";
+import { useApi } from "../configs/api";
 
 export function useEmail() {
   const { post, loading: apiLoading } = useApi();

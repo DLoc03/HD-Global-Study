@@ -49,7 +49,9 @@ CONFIGURE AND INSTALL THE RUNNING
    DEFAULT_ADMIN_PASS
 ```
 
-- JWT_SECRET (JWT Secret Key): The secret string used to encode/decode JSON Web Token (JWT). Should be long, random, unpredictable string
+`JWT_SECRET (JWT Secret Key): The secret string used to encode/decode JSON Web Token (JWT). Should be long, random, unpredictable string`
+
+`BACKEND_PREFIX: For example, when i build and setup server in 'server' folder, and move it into htdocs, the value of BACKEND_PREFIX=server. So, specifies the root path (prefix) of the backend if it is not running on the root domain. If the backend runs on the root domain in production, you can let it empty`
 
 ```VITE_API_ADMIN_URL: Admin URL
    VITE_API_FE_URL: Client URL
@@ -63,6 +65,7 @@ CONFIGURE AND INSTALL THE RUNNING
 * cd scripts => php seeder.php to create default data from .env file
 
 - Running frontend:
+  - Create .env file in client and admin, then and initialize the value for VITE_API_URL (Is the server URL)
 
 * cd client => type the command `npm run dev`
 * cd admin => type the command `npm run dev` and do the steps below:

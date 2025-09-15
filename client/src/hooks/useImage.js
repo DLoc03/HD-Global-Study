@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useApi } from ".";
+import { useApi } from "../configs/api";
 
 export function useImages() {
   const { get, loading, error } = useApi();

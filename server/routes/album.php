@@ -6,8 +6,11 @@ header('Content-Type: application/json');
 $pdo = getPDO();
 $albums = new AlbumsController($pdo);
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = preg_replace('#^/album#', '', $uri);
+$uri = preg_replace('#^/album#', '', $route);
+$uri = rtrim($uri, '/');
+if ($uri === '') {
+    $uri = '/'; 
+}
 $method = $_SERVER['REQUEST_METHOD'];
 
 $input = json_decode(file_get_contents('php://input'), true);

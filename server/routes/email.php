@@ -3,8 +3,8 @@ require_once __DIR__ . '/../src/EmailController.php';
 
 header('Content-Type: application/json');
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = preg_replace('#^/mail#', '', $uri);
+$uri = preg_replace('#^/mail#', '', $route);
+$uri = rtrim($uri, '/');
 $method = $_SERVER['REQUEST_METHOD'];
 
 $input = json_decode(file_get_contents('php://input'), true) ?? [];

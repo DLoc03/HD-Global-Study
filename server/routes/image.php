@@ -6,8 +6,12 @@ header('Content-Type: application/json');
 $pdo  = getPDO();
 $images = new ImagesController($pdo);
 
-$uri    = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri    = preg_replace('#^/image#', '', $uri);
+$uri = preg_replace('#^/image#', '', $route);
+$uri = rtrim($uri, '/');
+if ($uri === '') {
+    $uri = '/'; 
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 $input = json_decode(file_get_contents('php://input'), true);

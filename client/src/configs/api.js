@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "/server/",
+  baseURL: "/server",
 });
 
 export function useApi() {
