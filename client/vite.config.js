@@ -16,5 +16,4 @@ export default defineConfig({
   server: {
     open: true,
   },
-  base: "/client/",
 });

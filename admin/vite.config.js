@@ -21,5 +21,4 @@ export default defineConfig({
   optimizeDeps: {
     include: ["tinymce/tinymce"],
   },
-  base: "/admin/",
 });
