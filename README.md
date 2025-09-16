@@ -53,21 +53,11 @@ CONFIGURE AND INSTALL THE RUNNING
 
 `BACKEND_PREFIX: For example, when i build and setup server in 'server' folder, and move it into htdocs, the value of BACKEND_PREFIX=server. So, specifies the root path (prefix) of the backend if it is not running on the root domain. If the backend runs on the root domain in production, you can let it empty`
 
-```VITE_API_ADMIN_URL: Admin URL
-   VITE_API_FE_URL: Client URL
-```
-
 `MAIL_TO (Web service email. This is the email that receives service requests from customers visiting the website and sends them to the service provider.)`
 
-- Running server first
+- Running:
+  - Back to root project, type the command `npm run build`, then, `dist` folder will be created, move into dist folder, copy all and move them to `htdocs` folder located in your XAMPP folder.
+  - Open XAMPP Control Panel, start Apache and MySQL service, then click on the button `Admin` of Apache in XAMPP Control Panel
 
-* Type the command `php -S ... -t public` to start the server first and create the tables in the database
-* cd scripts => php seeder.php to create default data from .env file
-
-- Running frontend:
-  - Create .env file in client and admin, then and initialize the value for VITE_API_URL (Is the server URL)
-
-* cd client => type the command `npm run dev`
-* cd admin => type the command `npm run dev` and do the steps below:
-  - Login with default account admin (DEFAULT_ADMIN_USER & DEFAULT_ADMIN_PASS)
-  - If you want, you can change your account information in the settings.
+* Note:
+  - The login account when accessing /admin will be the account you set in `DEFAULT_ADMIN_USER` & `DEFAULT_ADMIN_PASS`
