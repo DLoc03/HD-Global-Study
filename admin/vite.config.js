@@ -18,6 +18,7 @@ export default defineConfig({
     open: true,
     port: 5174,
   },
+  base: "/admin/",
   optimizeDeps: {
     include: ["tinymce/tinymce"],
   },

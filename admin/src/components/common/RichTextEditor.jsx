@@ -89,7 +89,7 @@ export default function RichTextEditor({ initialValue = "", onChange }) {
         onInit={(evt, editor) => (editorRef.current = editor)}
         init={{
           license_key: "gpl",
-          base_url: "/tinymce",
+          base_url: "/admin/tinymce",
           suffix: ".min",
           height: 500,
           menubar: true,
