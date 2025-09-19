@@ -6,8 +6,8 @@
   ],
   "scripts": {
     "build": "npm run build:admin && npm run build:client && npm run copy:server",
-    "build:admin": "npm --prefix admin run build && powershell -Command \"New-Item -ItemType Directory -Force -Path dist/admin | Out-Null; Copy-Item -Recurse -Force admin/dist/* dist/admin/\"",
-    "build:client": "npm --prefix client run build && powershell -Command \"Copy-Item -Recurse -Force client/dist/* dist/\"",
+    "build:admin": "npm --prefix admin run build && powershell -Command \"New-Item -ItemType Directory -Force -Path dist/admin | Out-Null; Copy-Item -Recurse -Force admin/dist/* dist/admin/; Copy-Item -Force admin/.htaccess dist/admin/.htaccess\"",
+    "build:client": "npm --prefix client run build && powershell -Command \"Copy-Item -Recurse -Force client/dist/* dist/; if (Test-Path client/.htaccess) { Copy-Item -Force client/.htaccess dist/.htaccess }\"",
     "copy:server": "composer install --working-dir=server && powershell -Command \"New-Item -ItemType Directory -Force -Path dist/server | Out-Null; Copy-Item -Recurse -Force server/* dist/server/; Remove-Item -Recurse -Force dist/server/node_modules -ErrorAction SilentlyContinue\""
   }
 }
