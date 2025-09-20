@@ -20,33 +20,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+// Parse URI
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$prefix = $_ENV['BACKEND_PREFIX'] ?? '';
-if ($prefix !== '') {
-    $uri = preg_replace('#^' . preg_quote($prefix, '#') . '#', '', $uri);
-}
 $uri = rtrim($uri, '/');
-$uri = rtrim($uri, '/'); 
 
-if (preg_match('#^/auth#', $uri)) {
-    $route = $uri; 
+// Root check
+if (
+    $uri === '' || 
+    $uri === '/server' || $uri === '/server/' ||
+    $uri === '/server/public' || $uri === '/server/public/'
+) {
+    echo json_encode([
+        "status" => "API running",
+        "time" => date("Y-m-d H:i:s")
+    ]);
+    exit;
+}
+
+// Routes
+if (preg_match('#^/server/auth#', $uri)) {
+    $route = preg_replace('#^/server#', '', $uri); 
     require __DIR__ . '/../routes/auth.php';
-} elseif (preg_match('#^/post#', $uri)) {
-    $route = $uri;
+} elseif (preg_match('#^/server/post#', $uri)) {
+    $route = preg_replace('#^/server#', '', $uri); 
     require __DIR__ . '/../routes/post.php';
-} elseif (preg_match('#^/album#', $uri)) {
-    $route = $uri;
+} elseif (preg_match('#^/server/album#', $uri)) {
+    $route = preg_replace('#^/server#', '', $uri); 
     require __DIR__ . '/../routes/album.php';
-} elseif (preg_match('#^/image#', $uri)) {
-    $route = $uri;
+} elseif (preg_match('#^/server/image#', $uri)) {
+    $route = preg_replace('#^/server#', '', $uri); 
     require __DIR__ . '/../routes/image.php';
-} elseif (preg_match('#^/mail#', $uri)) {
-    $route = $uri;
+} elseif (preg_match('#^/server/mail#', $uri)) {
+    $route = preg_replace('#^/server#', '', $uri); 
     require __DIR__ . '/../routes/email.php';
-} elseif (preg_match('#^/category#', $uri)) {
-    $route = $uri;
+} elseif (preg_match('#^/server/category#', $uri)) {
+    $route = preg_replace('#^/server#', '', $uri); 
     require __DIR__ . '/../routes/category.php';
 } else {
     http_response_code(404);
-    echo json_encode(["error" => "Not Found"]);
+    echo json_encode(["error" => "Not Found!"]);
 }
