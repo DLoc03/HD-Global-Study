@@ -22,4 +22,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ["tinymce/tinymce"],
   },
+  ssr: {
+    noExternal: ["tinymce"],
+  },
 });
