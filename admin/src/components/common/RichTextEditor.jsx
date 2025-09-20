@@ -1,29 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-
-import "tinymce/tinymce";
-import "tinymce/icons/default";
-import "tinymce/themes/silver/theme";
-import "tinymce/models/dom/model";
-import "tinymce/skins/ui/oxide/skin.min.css";
-
-import "tinymce/plugins/advlist";
-import "tinymce/plugins/autolink";
-import "tinymce/plugins/lists";
-import "tinymce/plugins/link";
-import "tinymce/plugins/image";
-import "tinymce/plugins/charmap";
-import "tinymce/plugins/preview";
-import "tinymce/plugins/anchor";
-import "tinymce/plugins/searchreplace";
-import "tinymce/plugins/visualblocks";
-import "tinymce/plugins/code";
-import "tinymce/plugins/fullscreen";
-import "tinymce/plugins/insertdatetime";
-import "tinymce/plugins/media";
-import "tinymce/plugins/table";
-import "tinymce/plugins/help";
-import "tinymce/plugins/wordcount";
+import tinymce from "tinymce";
 
 export default function RichTextEditor({ initialValue = "", onChange }) {
   const [content, setContent] = useState(initialValue);
@@ -44,28 +21,14 @@ export default function RichTextEditor({ initialValue = "", onChange }) {
         onInit={(evt, editor) => (editorRef.current = editor)}
         init={{
           license_key: "gpl",
-          base_url: "/tinymce",
+          base_url: "/admin/tinymce",
           suffix: ".min",
+          skin: "oxide",
+          content_css: "default",
           height: 500,
           menubar: true,
-          plugins: [
-            "advlist",
-            "autolink",
-            "lists",
-            "link",
-            "image",
-            "charmap",
-            "preview",
-            "anchor",
-            "searchreplace",
-            "visualblocks",
-            "code",
-            "fullscreen",
-            "insertdatetime",
-            "media",
-            "table",
-            "wordcount",
-          ],
+          plugins:
+            "advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table wordcount",
           toolbar:
             "undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist | code fullscreen preview | image",
           automatic_uploads: true,
