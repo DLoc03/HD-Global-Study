@@ -2,60 +2,48 @@
 require_once __DIR__ . '/../src/CategoryController.php';
 header('Content-Type: application/json');
 
-$pdo = getPDO();
 $categories = new CategoryController($pdo);
 
-$uri = preg_replace('#^/category#', '', $route); 
+$uri = preg_replace('#^/server/category#', '', $route);
 $uri = rtrim($uri, '/');
-if ($uri === '') {
-    $uri = '/'; 
-}
+if ($uri === '') $uri = '/';
 $method = $_SERVER['REQUEST_METHOD'];
-
 $input = json_decode(file_get_contents('php://input'), true);
 
-switch ("$method $uri") {
-    case 'GET /':
-        $page  = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        $order = $_GET['order'] ?? 'DESC';
-        $name  = $_GET['name'] ?? '';
+$routes = [
+    'GET /' => fn() => $categories->getList(
+        $_GET['page'] ?? 1,
+        $_GET['limit'] ?? 10,
+        $_GET['order'] ?? 'DESC',
+        $_GET['name'] ?? ''
+    ),
 
-        echo json_encode($categories->getList($page, $limit, $order, $name));
-        break;
+    'GET /get' => fn() => isset($_GET['id']) && (int)$_GET['id'] > 0
+        ? $categories->get((int)$_GET['id'])
+        : ['success' => false, 'message' => 'Invalid category ID'],
 
-    case 'GET /get':
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if ($id <= 0) {
-            echo json_encode(['success' => false, 'message' => 'Invalid category ID']);
-            break;
-        }
-        echo json_encode($categories->get($id));
-        break;
+    'POST /create' => fn() => $categories->create($_POST ?: $input),
 
-    case 'POST /create':
-        $input = $_POST ?: $input;
-        echo json_encode($categories->create($input));
-        break;
+    'POST /update' => fn() => $categories->update(
+        $_POST['id'] ?? ($input['id'] ?? 0),
+        $_POST ?: $input
+    ),
 
-    case 'POST /update':
-        $input = $_POST ?: $input;
-        $id = $input['id'] ?? 0;
-        echo json_encode($categories->update((int)$id, $input));
-        break;
+    'PUT /update' => fn() => $categories->update(
+        $input['id'] ?? 0,
+        $input
+    ),
 
-    case 'PUT /update':
-        $id = $input['id'] ?? 0;
-        echo json_encode($categories->update((int)$id, $input));
-        break;
+    'DELETE /delete' => fn() => $categories->delete(
+        $_GET['id'] ?? ($input['id'] ?? 0)
+    ),
+];
 
-    case 'DELETE /delete':
-        $id = $_GET['id'] ?? ($input['id'] ?? 0);
-        echo json_encode($categories->delete((int)$id));
-        break;
-
-    default:
-        http_response_code(404);
-        echo json_encode(['success' => false, 'message' => 'Not Found']);
-        break;
+// Dispatch route
+$key = "$method $uri";
+if (isset($routes[$key])) {
+    echo json_encode($routes[$key]());
+} else {
+    http_response_code(404);
+    echo json_encode(['success' => false, 'message' => 'Not Found']);
 }

@@ -2,63 +2,48 @@
 require_once __DIR__ . '/../src/AuthController.php';
 header('Content-Type: application/json');
 
-$pdo = getPDO();
 $auth = new AuthController($pdo);
 
-$uri = preg_replace('#^/auth#', '', $route);
+$uri = preg_replace('#^/server/auth#', '', $route);
 $uri = rtrim($uri, '/');
+if ($uri === '') $uri = '/';
 $method = $_SERVER['REQUEST_METHOD'];
-
 $input = json_decode(file_get_contents('php://input'), true);
 
-switch ("$method $uri") {
+$routes = [
+    'POST /login' => fn() => $auth->login(),
 
-    // --- LOGIN ---
-    case 'POST /login':
-        echo json_encode($auth->login());
-        break;
-
-    // --- LOGOUT ---
-    case 'POST /logout':
+    'POST /logout' => fn() => [
         setcookie('auth_token', '', [
             'expires' => time() - 3600,
             'path' => '/',
             'httponly' => true,
             'samesite' => 'Strict'
-        ]);
-        echo json_encode(['success' => true, 'message' => 'Logged out']);
-        break;
+        ]),
+        ['success' => true, 'message' => 'Logged out']
+    ][1], 
 
-    // --- CHECK LOGIN STATUS ---
-    case 'GET /check':
-        $admin = $auth->check();
-        if ($admin) {
-            echo json_encode(['success' => true, 'admin_id' => $admin['admin_id'], 'username' => $admin['username']]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lại']);
-        }
-        break;
+    'GET /check' => fn() => ($admin = $auth->check())
+        ? ['success' => true, 'admin_id' => $admin['admin_id'], 'username' => $admin['username']]
+        : ['success' => false, 'message' => 'Đã hết phiên làm việc, vui lòng đăng nhập lại'],
 
-    // --- REFRESH TOKEN ---
-    case 'POST /refresh':
-        echo json_encode($auth->refresh());
-        break;
+    'POST /refresh' => fn() => $auth->refresh(),
 
-    // --- CHANGE PASSWORD ---
-    case 'POST /change-password':
-        $oldPassword = $input['old_password'] ?? '';
-        $newPassword = $input['new_password'] ?? '';
-        echo json_encode($auth->changePassword($oldPassword, $newPassword));
-        break;
+    'POST /change-password' => fn() => $auth->changePassword(
+        $input['old_password'] ?? '',
+        $input['new_password'] ?? ''
+    ),
 
-    // --- CHANGE USERNAME ---
-    case 'PUT /change-username':
-        $newUsername = $input['new_username'] ?? '';
-        echo json_encode($auth->changeUsername($newUsername));
-        break;
+    'PUT /change-username' => fn() => $auth->changeUsername(
+        $input['new_username'] ?? ''
+    ),
+];
 
-    default:
-        http_response_code(404);
-        echo json_encode(['error' => 'Not Found']);
-        break;
+// Dispatch route
+$key = "$method $uri";
+if (isset($routes[$key])) {
+    echo json_encode($routes[$key]());
+} else {
+    http_response_code(404);
+    echo json_encode(['error' => 'Not Found']);
 }

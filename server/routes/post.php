@@ -2,81 +2,60 @@
 require_once __DIR__ . '/../src/PostController.php';
 header('Content-Type: application/json');
 
-$pdo = getPDO();
 $posts = new PostController($pdo);
 
-$uri = preg_replace('#^/post#', '', $route);
+$uri = preg_replace('#^/server/post#', '', $route);
 $uri = rtrim($uri, '/');
-if ($uri === '') {
-    $uri = '/';
-}
-
+if ($uri === '') $uri = '/';
 $method = $_SERVER['REQUEST_METHOD'];
-
 $input = json_decode(file_get_contents('php://input'), true);
 
-switch ("$method $uri") {
-    case 'GET /':
-        $page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit  = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        $order  = $_GET['order'] ?? 'DESC';
-
-        $filters = [
+$routes = [
+    'GET /' => fn() => $posts->getList(
+        [
             'category_id' => $_GET['category_id'] ?? null,
             'status'      => $_GET['status'] ?? null,
             'title'       => $_GET['title'] ?? null,
-        ];
+        ],
+        $_GET['page'] ?? 1,
+        $_GET['limit'] ?? 10,
+        $_GET['order'] ?? 'DESC'
+    ),
 
-        echo json_encode($posts->getList($filters, $page, $limit, $order));
-        break;
-    case 'GET /get':
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if ($id <= 0) {
-            echo json_encode(['success' => false, 'message' => 'Invalid post ID']);
-            break;
-        }
-        echo json_encode($posts->get($id));
-        break;
+    'GET /get' => fn() => isset($_GET['id']) && (int)$_GET['id'] > 0
+        ? $posts->get((int)$_GET['id'])
+        : ['success' => false, 'message' => 'Invalid post ID'],
 
-    case 'GET /detail':
-        $slug = $_GET['slug'] ?? '';
-        if (!$slug) {
-            echo json_encode(['success' => false, 'message' => 'Slug is required']);
-            break;
-        }
-        echo json_encode($posts->getBySlug($slug));
-        break;
+    'GET /detail' => fn() => !empty($_GET['slug'])
+        ? $posts->getBySlug($_GET['slug'])
+        : ['success' => false, 'message' => 'Slug is required'],
 
-    case 'POST /updateStatus':
-        $id = $input['id'] ?? ($_GET['id'] ?? 0);
-        $status = $input['status'] ?? ($_GET['status'] ?? '');
-        echo json_encode($posts->updateStatus((int)$id, $status));
-        break;
+    'POST /updateStatus' => fn() => $posts->updateStatus(
+        $input['id'] ?? ($_GET['id'] ?? 0),
+        $input['status'] ?? ($_GET['status'] ?? '')
+    ),
 
-    case 'POST /create':
-        $input = $_POST;
-        $files = $_FILES;
-        echo json_encode($posts->create($input, $files));
-        break;
+    'POST /create' => fn() => $posts->create($_POST, $_FILES),
 
-    case 'POST /update':
-        $input = $_POST ?? [];
-        $id = $input['id'] ?? 0;
-        echo json_encode($posts->updateWithImage((int)$id, $input, $_FILES));
-        break;
+    'POST /update' => fn() => $posts->updateWithImage(
+        $_POST['id'] ?? 0,
+        $_POST,
+        $_FILES
+    ),
 
-    case 'PUT /update':
-        $id = $input['id'] ?? 0;
-        echo json_encode($posts->update((int)$id, $input));
-        break;
+    'PUT /update' => fn() => $posts->update(
+        $input['id'] ?? 0,
+        $input
+    ),
 
-    case 'DELETE /delete':
-        $id = $_GET['id'] ?? 0;
-        echo json_encode($posts->delete((int)$id));
-        break;
+    'DELETE /delete' => fn() => $posts->delete($_GET['id'] ?? 0),
+];
 
-    default:
-        http_response_code(404);
-        echo json_encode(['success' => false, 'message' => 'Not Found']);
-        break;
+// Dispatch route
+$key = "$method $uri";
+if (isset($routes[$key])) {
+    echo json_encode($routes[$key]());
+} else {
+    http_response_code(404);
+    echo json_encode(['success' => false, 'message' => 'Not Found!']);
 }

@@ -15,15 +15,17 @@ function BlogSidebar() {
       <h1 className="text-primary text-lg font-bold">Bài viết liên quan</h1>
 
       <div className="mb-4 w-full border-t-1 border-gray-200" />
-      {loading ? (
-        <SpinningLoading />
-      ) : posts?.totalItem > 0 ? (
-        posts?.items?.map((blog) => (
-          <BlogCard key={blog.id} blog={blog} direction="row" />
-        ))
-      ) : (
-        <p className="text-sm text-gray-400">Hiện chưa có bài viết nào</p>
-      )}
+      <div className="flex w-full flex-col items-start">
+        {loading ? (
+          <SpinningLoading />
+        ) : posts?.totalItem > 0 ? (
+          posts?.items?.map((blog) => (
+            <BlogCard key={blog.id} blog={blog} direction="row" />
+          ))
+        ) : (
+          <p className="text-sm text-gray-400">Hiện chưa có bài viết nào</p>
+        )}
+      </div>
     </div>
   );
 }

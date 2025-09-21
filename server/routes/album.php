@@ -1,79 +1,61 @@
 <?php
 require_once __DIR__ . '/../src/AlbumController.php';
-
 header('Content-Type: application/json');
 
-$pdo = getPDO();
 $albums = new AlbumsController($pdo);
 
-$uri = preg_replace('#^/album#', '', $route);
+$uri = preg_replace('#^/server/album#', '', $route);
 $uri = rtrim($uri, '/');
-if ($uri === '') {
-    $uri = '/'; 
-}
+if ($uri === '') $uri = '/';
 $method = $_SERVER['REQUEST_METHOD'];
-
 $input = json_decode(file_get_contents('php://input'), true);
 
-switch ("$method $uri") {
-    case 'GET /':
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        $status = $_GET['status'] ?? '';
-        $name = $_GET['name'] ?? ''; 
-        echo json_encode($albums->list($page, $limit, $status, $name));
-        break;
+$routes = [
+    'GET /' => fn() => $albums->list(
+        $_GET['page'] ?? 1,
+        $_GET['limit'] ?? 10,
+        $_GET['status'] ?? '',
+        $_GET['name'] ?? ''
+    ),
 
-    case 'GET /getAll':
-        echo json_encode($albums->getAll());
-        break;
+    'GET /getAll' => fn() => $albums->getAll(),
 
-    case 'GET /get':
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        echo json_encode($albums->get($id));
-        break;
+    'GET /get' => fn() => $albums->get($_GET['id'] ?? 0),
 
-    case 'GET /preview':
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        echo json_encode($albums->listWithPreview($page, $limit));
-        break;
+    'GET /preview' => fn() => $albums->listWithPreview(
+        $_GET['page'] ?? 1,
+        $_GET['limit'] ?? 10
+    ),
 
-    case 'GET /images':
-        $albumId = isset($_GET['album_id']) ? (int)$_GET['album_id'] : 0;
-        echo json_encode($albums->getImages($albumId));
-        break;
+    'GET /images' => fn() => $albums->getImages($_GET['album_id'] ?? 0),
 
-    case 'POST /create':
-        echo json_encode($albums->create($input ?? []));
-        break;
+    'POST /create' => fn() => $albums->create($input ?? []),
 
-   case 'PUT /update':
-        $id = $input['id'] ?? ($_GET['id'] ?? 0);
-        echo json_encode($albums->update((int)$id, $input ?? []));
-        break;
+    'PUT /update' => fn() => $albums->update(
+        $input['id'] ?? ($_GET['id'] ?? 0),
+        $input ?? []
+    ),
 
-    case 'DELETE /delete':
-        $id = $_GET['id'] ?? 0;
-        echo json_encode($albums->delete((int)$id));
-        break;
+    'DELETE /delete' => fn() => $albums->delete($_GET['id'] ?? 0),
 
-    case 'POST /updateStatus':
-        $id = $input['id'] ?? ($_GET['id'] ?? 0);
-        $status = $input['status'] ?? ($_GET['status'] ?? '');
-        echo json_encode($albums->updateStatus((int)$id, $status));
-        break;
+    'POST /updateStatus' => fn() => $albums->updateStatus(
+        $input['id'] ?? ($_GET['id'] ?? 0),
+        $input['status'] ?? ($_GET['status'] ?? '')
+    ),
 
-    case 'GET /search': 
-        $title  = $_GET['title'] ?? '';
-        $status = $_GET['status'] ?? '';
-        $page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit  = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        echo json_encode($albums->searchByTitle($title, $status, $page, $limit));
-        break;
+    'GET /search' => fn() => $albums->searchByTitle(
+        $_GET['title'] ?? '',
+        $_GET['status'] ?? '',
+        $_GET['page'] ?? 1,
+        $_GET['limit'] ?? 10
+    ),
+];
 
-    default:
-        http_response_code(404);
-        echo json_encode(['success' => false, 'message' => 'Not Found']);
-        break;
+// Dispatch route
+$key = "$method $uri";
+if (isset($routes[$key])) {
+    echo json_encode($routes[$key]());
+} else {
+    http_response_code(404);
+    echo json_encode(['success' => false, 'message' => 'Not Found']);
 }

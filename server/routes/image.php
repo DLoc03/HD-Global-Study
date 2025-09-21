@@ -1,72 +1,58 @@
 <?php
 require_once __DIR__ . '/../src/ImageController.php';
-
 header('Content-Type: application/json');
 
-$pdo  = getPDO();
 $images = new ImagesController($pdo);
 
-$uri = preg_replace('#^/image#', '', $route);
+$uri = preg_replace('#^/server/image#', '', $route);
 $uri = rtrim($uri, '/');
-if ($uri === '') {
-    $uri = '/'; 
-}
-
+if ($uri === '') $uri = '/';
 $method = $_SERVER['REQUEST_METHOD'];
+$input = json_decode(file_get_contents('php://input'), true) ?? [];
 
-$input = json_decode(file_get_contents('php://input'), true);
+$routes = [
+    'POST /create' => fn() => $images->create($_POST, $_FILES),
+    
+    'DELETE /delete' => fn() => $images->delete($_GET['id'] ?? 0),
 
-switch ("$method $uri") {
-    case 'POST /create':
-        echo json_encode($images->create($_POST, $_FILES));
-        break;
+    'PUT /move' => fn() => $images->updateAlbum(
+        $input['id'] ?? 0,
+        $input['album_id'] ?? 0
+    ),
 
-    case 'DELETE /delete':
-        $id = $_GET['id'] ?? 0;
-        echo json_encode($images->delete((int)$id));
-        break;
+    'POST /updateStatus' => fn() => $images->updateStatus(
+        $input['id'] ?? ($_GET['id'] ?? 0),
+        $input['status'] ?? ($_GET['status'] ?? '')
+    ),
 
-    case 'PUT /move':
-        $id = $input['id'] ?? 0;
-        $newAlbumId = $input['album_id'] ?? 0;
-        echo json_encode($images->updateAlbum((int)$id, (int)$newAlbumId));
-        break;
+    'GET /list' => fn() => $images->list(
+        $_GET['album_id'] ?? 0,
+        $_GET['status'] ?? '',
+        $_GET['page'] ?? 1,
+        $_GET['limit'] ?? 10
+    ),
 
-    case 'POST /updateStatus':
-        $id = $input['id'] ?? ($_GET['id'] ?? 0);
-        $status = $input['status'] ?? ($_GET['status'] ?? '');
-        echo json_encode($images->updateStatus((int)$id, $status));
-        break;
+    'GET /byAlbum' => fn() => $images->list(
+        $_GET['album_id'] ?? 0,
+        'published',
+        $_GET['page'] ?? 1,
+        $_GET['limit'] ?? 10
+    ),
 
-    case 'GET /list':
-        $albumId = $_GET['album_id'] ?? 0;
-        $status  = $_GET['status'] ?? '';
-        $page    = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit   = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        echo json_encode($images->list((int)$albumId, $status, $page, $limit));
-        break;
+    'GET /get' => fn() => $images->get($_GET['id'] ?? 0),
 
-    case 'GET /byAlbum':
-        $albumId = $_GET['album_id'] ?? 0;
-        $page    = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit   = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        echo json_encode($images->list((int)$albumId, 'published',$page, $limit));
-        break;
+    'GET /listByStatus' => fn() => $images->listByStatus(
+        $_GET['status'] ?? 'published',
+        $_GET['page'] ?? 1,
+        $_GET['limit'] ?? 10
+    ),
+];
 
-    case 'GET /get':
-        $id = $_GET['id'] ?? 0;
-        echo json_encode($images->get((int)$id));
-        break;
-    case 'GET /listByStatus':
-        $status = $_GET['status'] ?? 'published';
-        $page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit  = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        echo json_encode($images->listByStatus($status, $page, $limit));
-        break;
-
-
-    default:
-        http_response_code(404);
-        echo json_encode(['success' => false, 'message' => 'Not Found']);
-        break;
+// Dispatch route
+$key = "$method $uri";
+if (isset($routes[$key])) {
+    echo json_encode($routes[$key]());
+} else {
+    http_response_code(404);
+    echo json_encode(['success' => false, 'message' => 'Not Found']);
 }
